@@ -9,6 +9,7 @@ export const itemRowStyles: CSSResult = css`
     border: 1px solid var(--divider-color, #e8e8e8);
     border-radius: 8px;
     gap: 8px;
+    cursor: pointer;
   }
 
   .item-row.zero-quantity {

@@ -1,5 +1,5 @@
-import { DOMAIN, SERVICES, PARAMS } from '../utils/constants';
-import { HomeAssistant } from '../types/homeAssistant';
+import { DOMAIN, EVENT_TYPES, SERVICES, PARAMS } from '../utils/constants';
+import { HomeAssistant, InventoryItem } from '../types/homeAssistant';
 import { ItemData } from '../types/inventoryItem';
 import { Utilities } from '../utils/utilities';
 
@@ -179,6 +179,38 @@ export class Services {
       return { success: true };
     } catch (error) {
       console.error('Error updating item:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+
+  async fireItemClickEvent(
+    inventoryId: string,
+    entityId: string,
+    itemName: string,
+    item?: InventoryItem,
+  ): Promise<ServiceResult> {
+    try {
+      const payload = {
+        inventory_id: Utilities.sanitizeString(inventoryId, 100),
+        entity_id: Utilities.sanitizeString(entityId, 255),
+        name: Utilities.sanitizeString(itemName, 100),
+        location: Utilities.sanitizeString(item?.location ?? '', 50),
+        category: Utilities.sanitizeString(item?.category ?? '', 50),
+        quantity: item?.quantity ?? 0,
+        unit: Utilities.sanitizeString(item?.unit ?? '', 20),
+      };
+
+      await this.hass.callWS({
+        type: 'fire_event',
+        event_type: EVENT_TYPES.ITEM_CLICK,
+        event_data: payload,
+      });
+      return { success: true };
+    } catch (error) {
+      console.error('Error firing item click event:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),

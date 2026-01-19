@@ -91,16 +91,22 @@ export class EventHandler {
 
   private async handleClick(event: Event): Promise<void> {
     const target = event.target as HTMLElement;
-    if (target.tagName === 'BUTTON' && target.hasAttribute('data-processing')) {
+    const actionTarget = target.closest('[data-action][data-name]') as HTMLElement | null;
+
+    if (actionTarget?.tagName === 'BUTTON' && actionTarget.hasAttribute('data-processing')) {
       event.preventDefault();
       event.stopPropagation();
       return;
     }
 
-    if (target.dataset.action && target.dataset.name) {
+    if (actionTarget?.dataset.action && actionTarget?.dataset.name) {
       event.preventDefault();
       event.stopPropagation();
-      await this.handleItemAction(target, target.dataset.action, target.dataset.name);
+      await this.handleItemAction(
+        actionTarget,
+        actionTarget.dataset.action,
+        actionTarget.dataset.name,
+      );
       return;
     }
 
@@ -232,19 +238,32 @@ export class EventHandler {
     action: string,
     itemName: string,
   ): Promise<void> {
-    if (button.hasAttribute('disabled') || button.getAttribute('aria-disabled') === 'true') {
+    const isButton = button.tagName === 'BUTTON';
+    if (
+      isButton &&
+      (button.hasAttribute('disabled') || button.getAttribute('aria-disabled') === 'true')
+    ) {
       return;
     }
 
-    button.setAttribute('data-processing', 'true');
-    button.setAttribute('disabled', 'true');
-    button.style.opacity = '0.6';
-    button.style.pointerEvents = 'none';
+    if (isButton) {
+      button.setAttribute('data-processing', 'true');
+      button.setAttribute('disabled', 'true');
+      button.style.opacity = '0.6';
+      button.style.pointerEvents = 'none';
+    }
 
     try {
       const inventoryId = Utilities.getInventoryId(this.hass, this.config.entity);
 
       switch (action) {
+        case ACTIONS.ITEM_CLICK: {
+          const state = this.hass.states[this.config.entity];
+          const items = Utilities.validateInventoryItems(state?.attributes?.items || []);
+          const item = items.find((entry) => entry.name === itemName);
+          await this.services.fireItemClickEvent(inventoryId, this.config.entity, itemName, item);
+          break;
+        }
         case ACTIONS.INCREMENT: {
           await this.services.incrementItem(inventoryId, itemName);
           this.renderCallback();
@@ -289,10 +308,12 @@ export class EventHandler {
       console.error(`Error performing ${action} on ${itemName}:`, error);
     } finally {
       setTimeout(() => {
-        button.setAttribute('data-processing', 'true');
-        button.removeAttribute('disabled');
-        button.style.opacity = '1';
-        button.style.pointerEvents = 'auto';
+        if (button.tagName === 'BUTTON') {
+          button.setAttribute('data-processing', 'true');
+          button.removeAttribute('disabled');
+          button.style.opacity = '1';
+          button.style.pointerEvents = 'auto';
+        }
       }, 200);
     }
   }

@@ -85,8 +85,13 @@ export const ACTIONS = {
   CLOSE_ADD_MODAL: 'close_add_modal',
   DECREMENT: 'decrement',
   INCREMENT: 'increment',
+  ITEM_CLICK: 'item_click',
   OPEN_EDIT_MODAL: 'open_edit',
   REMOVE: 'remove',
+};
+
+export const EVENT_TYPES = {
+  ITEM_CLICK: 'simple_inventory_item_click',
 };
 
 export const DEFAULTS = {
