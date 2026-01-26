@@ -65,6 +65,11 @@ export const buttonStyles: CSSResult = css`
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
+  .control-btn ha-icon,
+  .edit-btn ha-icon {
+    --mdc-icon-size: 18px;
+  }
+
   .control-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;

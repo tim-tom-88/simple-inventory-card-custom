@@ -124,10 +124,18 @@ export function createItemRowTemplate(
           ${renderAutoAddInfo(item, todoLists, translations)}
         </div>
         <div class="item-controls">
-          <button class="edit-btn" data-action="open_edit" data-name="${item.name}">ƒsT‹÷?</button>
-          <button class="control-btn" data-action="decrement" data-name="${item.name}" ${item.quantity === 0 ? 'disabled' : ''}>ƒz-</button>
-          <button class="control-btn" data-action="increment" data-name="${item.name}">ƒz</button>
-          <button class="control-btn" data-action="remove" data-name="${item.name}">ƒ?O</button>
+          <button class="edit-btn" data-action="open_edit" data-name="${item.name}" aria-label="Edit item">
+            <ha-icon icon="mdi:cog"></ha-icon>
+          </button>
+          <button class="control-btn" data-action="decrement" data-name="${item.name}" aria-label="Decrease quantity" ${item.quantity === 0 ? 'disabled' : ''}>
+            <ha-icon icon="mdi:minus"></ha-icon>
+          </button>
+          <button class="control-btn" data-action="increment" data-name="${item.name}" aria-label="Increase quantity">
+            <ha-icon icon="mdi:plus"></ha-icon>
+          </button>
+          <button class="control-btn" data-action="remove" data-name="${item.name}" aria-label="Remove item">
+            <ha-icon icon="mdi:trash-can-outline"></ha-icon>
+          </button>
         </div>
       </div>
     </div>
@@ -156,7 +164,9 @@ export function createMinimalItemRowTemplate(
           ${renderAutoAddInfo(item, todoLists, translations)}
         </div>
         <div class="item-controls">
-          <button class="edit-btn" data-action="open_edit" data-name="${item.name}">ƒsT‹÷?</button>
+          <button class="edit-btn" data-action="open_edit" data-name="${item.name}" aria-label="Edit item">
+            <ha-icon icon="mdi:cog"></ha-icon>
+          </button>
         </div>
       </div>
     </div>

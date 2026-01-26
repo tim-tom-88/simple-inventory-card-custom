@@ -27,6 +27,7 @@ export const controlStyles: CSSResult = css`
     gap: 12px;
     align-items: center;
     margin-bottom: 0;
+    flex-wrap: wrap;
   }
 
   .search-row input {

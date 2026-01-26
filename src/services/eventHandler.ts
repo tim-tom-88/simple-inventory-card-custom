@@ -49,6 +49,7 @@ export class EventHandler {
 
   setupEventListeners(): void {
     if (this.eventListenersSetup) {
+      this.filters.setupSearchInput(this.config.entity, () => this.handleSearchChange());
       return;
     }
 
@@ -67,8 +68,6 @@ export class EventHandler {
 
     this.filters.setupSearchInput(this.config.entity, () => this.handleSearchChange());
     this.eventListenersSetup = true;
-
-    this.initializeMultiSelects();
   }
 
   cleanupEventListeners(): void {
@@ -350,7 +349,6 @@ export class EventHandler {
       const filters = this.filters.getCurrentFilters(this.config.entity);
       setTimeout(() => {
         this.filters.updateFilterIndicators(filters, this.translations);
-        this.initializeMultiSelects();
       }, 50);
     } catch (error) {
       console.error('Error clearing filters:', error);

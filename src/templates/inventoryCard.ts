@@ -1,4 +1,3 @@
-import { ELEMENTS } from '../utils/constants';
 import { createInventoryHeader } from '../templates/inventoryHeader';
 import { createSearchAndFilters } from '../templates/searchAndFilters';
 import { createAddModal, createEditModal } from '../templates/modalTemplates';
@@ -29,14 +28,8 @@ export function generateCardHTML(
     <ha-card>
       ${createInventoryHeader(inventoryName, allItems as InventoryItem[], translations, description)}
 
-      <div class="controls-row">
-        <button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
-          + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
-        </button>
-      </div>
-
       <div class="search-controls">
-        ${createSearchAndFilters(filters, categories, locations, translations)}
+        ${createSearchAndFilters(filters, translations)}
       </div>
 
       ${createActiveFiltersDisplay(filters, translations)}
