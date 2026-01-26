@@ -15,6 +15,13 @@ class MinimalInventoryCard extends SimpleInventoryCard {
 
     super.setConfig(nextConfig);
   }
+
+  static getStubConfig(): InventoryConfig | object {
+    return {
+      type: 'custom:simple-inventory-card-custom-minimal',
+      minimal: true,
+    };
+  }
 }
 
 export { MinimalInventoryCard };

@@ -174,7 +174,9 @@ class SimpleInventoryCard extends LitElement {
   }
 
   static getStubConfig(): InventoryConfig | object {
-    return {};
+    return {
+      type: 'custom:simple-inventory-card-custom',
+    };
   }
 }
 

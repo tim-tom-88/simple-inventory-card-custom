@@ -30,15 +30,10 @@ function searchRow(filters: FilterState, translations: TranslationData): string 
       />
       <button id="${ELEMENTS.CLEAR_FILTERS}" 
         class="clear-only-btn ${Utilities.hasActiveFilters(filters) ? 'has-active-filters' : ''}">
-        ${TranslationManager.localize(
-          translations,
-          'filters.clear_all_filters',
-          undefined,
-          'Clear Filters',
-        )}
+        ×
       </button>
       <button id="${ELEMENTS.OPEN_ADD_MODAL}" class="add-new-btn">
-        + ${TranslationManager.localize(translations, 'modal.add_item', undefined, 'Add Item')}
+        +
       </button>
     </div>
 `;

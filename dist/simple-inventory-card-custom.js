@@ -386,8 +386,8 @@ const w = globalThis,
   O = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,
   N = /-->/g,
   q = />/g,
-  F = RegExp(`>|${M}(?:([^\\s"'>=/]+)(${M}*=${M}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, 'g'),
-  U = /'/g,
+  U = RegExp(`>|${M}(?:([^\\s"'>=/]+)(${M}*=${M}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`, 'g'),
+  F = /'/g,
   P = /"/g,
   H = /^(?:script|style|textarea|title)$/i,
   B = ((J = 1), (t, ...e) => ({ _$litType$: J, strings: t, values: e })),
@@ -428,22 +428,22 @@ class X {
                   : void 0 !== l[1]
                     ? (a = q)
                     : void 0 !== l[2]
-                      ? (H.test(l[2]) && (r = RegExp('</' + l[2], 'g')), (a = F))
-                      : void 0 !== l[3] && (a = F)
-                : a === F
+                      ? (H.test(l[2]) && (r = RegExp('</' + l[2], 'g')), (a = U))
+                      : void 0 !== l[3] && (a = U)
+                : a === U
                   ? '>' === l[0]
                     ? ((a = r ?? O), (d = -1))
                     : void 0 === l[1]
                       ? (d = -2)
                       : ((d = a.lastIndex - l[2].length),
                         (i = l[1]),
-                        (a = void 0 === l[3] ? F : '"' === l[3] ? P : U))
-                  : a === P || a === U
-                    ? (a = F)
+                        (a = void 0 === l[3] ? U : '"' === l[3] ? P : F))
+                  : a === P || a === F
+                    ? (a = U)
                     : a === N || a === q
                       ? (a = O)
-                      : ((a = F), (r = void 0)));
-          const h = a === F && t[s + 1].startsWith('/>') ? ' ' : '';
+                      : ((a = U), (r = void 0)));
+          const h = a === U && t[s + 1].startsWith('/>') ? ' ' : '';
           n +=
             a === O
               ? e + C
@@ -813,8 +813,8 @@ const dt = 'simple_inventory',
   Ot = 'description',
   Nt = 'expiry-alert-days',
   qt = 'expiry-date',
-  Ft = 'location',
-  Ut = 'name',
+  Ut = 'location',
+  Ft = 'name',
   Pt = 'quantity',
   Ht = 'todo-list',
   Bt = 'unit',
@@ -1779,8 +1779,8 @@ class Oe {
       description: this.getInputValue(`add-${Ot}`),
       expiryAlertDays: this.getInputValue(`add-${Nt}`),
       expiryDate: this.getInputValue(`add-${qt}`),
-      location: this.getInputValue(`add-${Ft}`),
-      name: this.getInputValue(`add-${Ut}`),
+      location: this.getInputValue(`add-${Ut}`),
+      name: this.getInputValue(`add-${Ft}`),
       quantity: this.getInputValue(`add-${Pt}`),
       todoList: this.getInputValue(`add-${Ht}`),
       unit: this.getInputValue(`add-${Bt}`),
@@ -1795,8 +1795,8 @@ class Oe {
       description: this.getInputValue(`edit-${Ot}`),
       expiryAlertDays: this.getInputValue(`edit-${Nt}`),
       expiryDate: this.getInputValue(`edit-${qt}`),
-      location: this.getInputValue(`edit-${Ft}`),
-      name: this.getInputValue(`edit-${Ut}`),
+      location: this.getInputValue(`edit-${Ut}`),
+      name: this.getInputValue(`edit-${Ft}`),
       quantity: this.getInputValue(`edit-${Pt}`),
       todoList: this.getInputValue(`edit-${Ht}`),
       unit: this.getInputValue(`edit-${Bt}`),
@@ -1812,8 +1812,8 @@ class Oe {
       { id: `edit-${Ot}`, value: t.description ?? fe.DESCRIPTION },
       { id: `edit-${Nt}`, value: (t.expiry_alert_days ?? fe.EXPIRY_ALERT_DAYS).toString() },
       { id: `edit-${qt}`, value: t.expiry_date ?? fe.EXPIRY_DATE },
-      { id: `edit-${Ft}`, value: t.location ?? fe.LOCATION },
-      { id: `edit-${Ut}`, value: t.name ?? '' },
+      { id: `edit-${Ut}`, value: t.location ?? fe.LOCATION },
+      { id: `edit-${Ft}`, value: t.name ?? '' },
       { id: `edit-${Pt}`, value: (t.quantity ?? fe.QUANTITY).toString() },
       { id: `edit-${Ht}`, value: t.todo_list ?? fe.TODO_LIST },
       { id: `edit-${Bt}`, value: t.unit ?? fe.UNIT },
@@ -1831,8 +1831,8 @@ class Oe {
       { id: `add-${Ot}`, value: fe.DESCRIPTION },
       { id: `add-${Nt}`, value: fe.EXPIRY_ALERT_DAYS.toString() },
       { id: `add-${qt}`, value: fe.EXPIRY_DATE },
-      { id: `add-${Ft}`, value: fe.LOCATION },
-      { id: `add-${Ut}`, value: '' },
+      { id: `add-${Ut}`, value: fe.LOCATION },
+      { id: `add-${Ft}`, value: '' },
       { id: `add-${Pt}`, value: fe.QUANTITY.toString() },
       { id: `add-${Ht}`, value: fe.TODO_LIST },
       { id: `add-${Bt}`, value: fe.UNIT },
@@ -1874,7 +1874,7 @@ class Ne {
     e
       ? (this.validationManager.clearError(!0),
         e.classList.add(de),
-        this.focusElementWithDelay(Ut),
+        this.focusElementWithDelay(Ft),
         this.setupExpiryThresholdInteraction(t),
         this.validationManager.setupValidationListeners())
       : console.warn('Add modal not found in DOM');
@@ -1896,7 +1896,7 @@ class Ne {
       l &&
         (this.validationManager.clearError(!1),
         l.classList.add(de),
-        this.focusElementWithDelay(Ut, !0),
+        this.focusElementWithDelay(Ft, !0),
         this.setupExpiryThresholdInteraction(i),
         this.validationManager.setupValidationListeners()),
       { item: s, found: !0 }
@@ -1991,7 +1991,7 @@ class qe {
       let t = '';
       switch (o.field) {
         case 'name':
-          t = `${i}-${Ut}`;
+          t = `${i}-${Ft}`;
           break;
         case 'quantity':
           t = `${i}-${Pt}`;
@@ -2046,7 +2046,7 @@ class qe {
         this.getElement(`${e}-${Pt}`),
         this.getElement(`${e}-${Rt}`),
         this.getElement(`${e}-${Ht}`),
-        this.getElement(`${e}-${Ut}`),
+        this.getElement(`${e}-${Ft}`),
         this.getElement(`${e}-${qt}`),
       ],
       o = this.getElement(`${e}-${Dt}`),
@@ -2071,7 +2071,7 @@ class qe {
     return this.shadowRoot.getElementById(t);
   }
 }
-function Fe(t) {
+function Ue(t) {
   const e = t.shadowRoot || document,
     i = e.getElementById(t.id),
     o = e.getElementById(`${t.id}-dropdown`);
@@ -2146,7 +2146,7 @@ function Fe(t) {
     }),
     l());
 }
-class Ue {
+class Fe {
   constructor(t, e, i, o) {
     ((this.services = e),
       (this.getInventoryId = i),
@@ -2243,8 +2243,8 @@ class Ue {
   }
   initializeAutoCompleteInputs(t, e, i) {
     setTimeout(() => {
-      (Fe({ id: `${t}-${Ft}`, options: e, shadowRoot: this.shadowRoot }),
-        Fe({ id: `${t}-${Mt}`, options: i, shadowRoot: this.shadowRoot }));
+      (Ue({ id: `${t}-${Ut}`, options: e, shadowRoot: this.shadowRoot }),
+        Ue({ id: `${t}-${Mt}`, options: i, shadowRoot: this.shadowRoot }));
     }, 0);
   }
 }
@@ -3189,6 +3189,7 @@ const Be = a`
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 44px;
   }
 
   .add-new-btn:hover {
@@ -3292,6 +3293,11 @@ const Be = a`
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .clear-only-btn:hover {
@@ -3705,7 +3711,7 @@ function je(t, e, i, o) {
 }
 function Ye(t, e) {
   return `\n    ${(function (t, e) {
-    return `\n    <div class="search-row">\n      <input \n        type="text" \n        id="${te}" \n        placeholder="${De.localize(e, 'filters.search_placeholder', void 0, 'Search items...')}" \n        value="${t.searchText || ''}"\n        class="search-input ${t.searchText ? 'has-value' : ''}"\n      />\n      <button id="${Wt}" \n        class="clear-only-btn ${ze.hasActiveFilters(t) ? 'has-active-filters' : ''}">\n        ${De.localize(e, 'filters.clear_all_filters', void 0, 'Clear Filters')}\n      </button>\n      <button id="${Yt}" class="add-new-btn">\n        + ${De.localize(e, 'modal.add_item', void 0, 'Add Item')}\n      </button>\n    </div>\n`;
+    return `\n    <div class="search-row">\n      <input \n        type="text" \n        id="${te}" \n        placeholder="${De.localize(e, 'filters.search_placeholder', void 0, 'Search items...')}" \n        value="${t.searchText || ''}"\n        class="search-input ${t.searchText ? 'has-value' : ''}"\n      />\n      <button id="${Wt}" \n        class="clear-only-btn ${ze.hasActiveFilters(t) ? 'has-active-filters' : ''}">\n        ×\n      </button>\n      <button id="${Yt}" class="add-new-btn">\n        +\n      </button>\n    </div>\n`;
   })(t, e)}\n  `;
 }
 function Ve(t) {
@@ -3723,7 +3729,7 @@ function Qe(t, e, i, o = [], r = []) {
     t,
     e,
   ) {
-    return `\n    <div class="form-group">\n      <label for="${t}-${Ut}" class="form-label">\n        ${De.localize(e, 'modal.name_required', void 0, 'Name *')}\n      </label>\n      <input type="text" id="${t}-${Ut}" required />\n    </div> \n  `;
+    return `\n    <div class="form-group">\n      <label for="${t}-${Ft}" class="form-label">\n        ${De.localize(e, 'modal.name_required', void 0, 'Name *')}\n      </label>\n      <input type="text" id="${t}-${Ft}" required />\n    </div> \n  `;
   })(n, i)}\n          ${(function (t, e) {
     return `\n    <div class="form-group">\n      <label for="${t}-${Ot}" class="form-label">\n        ${De.localize(e, 'modal.description', void 0, 'Description')}\n      </label>\n      <input type="text" id="${t}-${Ot}" placeholder="${De.localize(e, 'modal.description_placeholder', void 0, 'Item description')}" />\n    </div> \n  `;
   })(n, i)}\n          ${(function (t, e) {
@@ -3739,7 +3745,7 @@ function Qe(t, e, i, o = [], r = []) {
   ) {
     return `\n    <div class="input-group">\n      <label for="${t}-${Mt}" class="form-label">\n        ${De.localize(e, 'modal.category', void 0, 'Category')}\n      </label>\n      ${Ve({ id: `${t}-${Mt}`, placeholder: De.localize(e, 'modal.category_placeholder', void 0, 'Food, Tools, Supplies, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
   })(n, i, o)}\n            ${(function (t, e, i = []) {
-    return `\n    <div class="input-group">\n      <label for="${t}-${Ft}" class="form-label">\n        ${De.localize(e, 'modal.location', void 0, 'Location')}\n      </label>\n      ${Ve({ id: `${t}-${Ft}`, placeholder: De.localize(e, 'modal.location_placeholder', void 0, 'Pantry, Garage Shelf, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
+    return `\n    <div class="input-group">\n      <label for="${t}-${Ut}" class="form-label">\n        ${De.localize(e, 'modal.location', void 0, 'Location')}\n      </label>\n      ${Ve({ id: `${t}-${Ut}`, placeholder: De.localize(e, 'modal.location_placeholder', void 0, 'Pantry, Garage Shelf, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
   })(n, i, r)}\n          </div>\n\n          <div class="form-row">\n            ${(function (
     t,
     e,
@@ -4383,7 +4389,7 @@ class li {
           c = new ni();
         c.setRenderCallback(i);
         const h = (e) => ze.getInventoryId(t, e),
-          p = new Ue(this.renderRoot, s, h, o),
+          p = new Fe(this.renderRoot, s, h, o),
           u = new si(this.renderRoot, s, p, l, e, t, i, r, n, a);
         return (
           (this.services = {
@@ -4607,7 +4613,7 @@ class hi extends st {
     return document.createElement('simple-inventory-config-editor');
   }
   static getStubConfig() {
-    return {};
+    return { type: 'custom:simple-inventory-card-custom' };
   }
 }
 (!(async function () {
@@ -4650,6 +4656,9 @@ class ui extends hi {
   setConfig(t) {
     const e = { ...t, minimal: !0, type: t.type || 'custom:simple-inventory-card-custom-minimal' };
     super.setConfig(e);
+  }
+  static getStubConfig() {
+    return { type: 'custom:simple-inventory-card-custom-minimal', minimal: !0 };
   }
 }
 (customElements.get('simple-inventory-card-custom-minimal') ||

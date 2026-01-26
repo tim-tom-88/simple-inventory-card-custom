@@ -41,6 +41,7 @@ export const buttonStyles: CSSResult = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 44px;
   }
 
   .add-new-btn:hover {
@@ -144,6 +145,11 @@ export const buttonStyles: CSSResult = css`
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .clear-only-btn:hover {
