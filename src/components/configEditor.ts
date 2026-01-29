@@ -17,6 +17,10 @@ class ConfigEditor extends LitElement {
   public hass?: HomeAssistant;
   private _config?: InventoryConfig;
   private _translations: TranslationData = {};
+  private readonly _defaultType = {
+    standard: 'custom:simple-inventory-card-custom',
+    minimal: 'custom:simple-inventory-card-custom-minimal',
+  };
 
   constructor() {
     super();
@@ -59,7 +63,13 @@ class ConfigEditor extends LitElement {
   }
 
   setConfig(config: InventoryConfig): void {
-    this._config = { ...config, sort_method: config.sort_method || DEFAULTS.SORT_METHOD };
+    const type =
+      config.type || (config.minimal ? this._defaultType.minimal : this._defaultType.standard);
+    this._config = {
+      ...config,
+      type,
+      sort_method: config.sort_method || DEFAULTS.SORT_METHOD,
+    };
   }
 
   get _entity(): string {
@@ -83,11 +93,10 @@ class ConfigEditor extends LitElement {
     const selectedSort = this._config.sort_method || DEFAULTS.SORT_METHOD;
 
     if (!this._config.entity && inventoryEntities.length > 0) {
-      if (!this._config.type) {
-        this._config.type = 'custom:simple-inventory-card-custom';
-      }
-
-      this._config.entity = inventoryEntities[0];
+      const type =
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard);
+      this._config = { ...this._config, type, entity: inventoryEntities[0] };
       this.dispatchEvent(
         new CustomEvent('config-changed', {
           detail: { config: this._config },
@@ -144,7 +153,9 @@ class ConfigEditor extends LitElement {
       ...this._config,
       entity: value,
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
 
     this._config = config;
@@ -213,7 +224,9 @@ class ConfigEditor extends LitElement {
       ...this._config,
       ...(hasActionValues ? { item_click_action: nextAction } : {}),
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
 
     this._config = config;
@@ -245,7 +258,9 @@ class ConfigEditor extends LitElement {
       ...this._config,
       ...(parsed ? { item_click_action: parsed } : {}),
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
 
     if (!parsed && this._config.item_click_action) {
@@ -316,7 +331,9 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       sort_method: value || DEFAULTS.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
 
     this._config = config;

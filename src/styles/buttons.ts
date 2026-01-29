@@ -44,6 +44,13 @@ export const buttonStyles: CSSResult = css`
     min-width: 44px;
   }
 
+  .search-row .add-new-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    flex: 0 0 44px;
+  }
+
   .add-new-btn:hover {
     opacity: 0.9;
     transform: translateY(-1px);

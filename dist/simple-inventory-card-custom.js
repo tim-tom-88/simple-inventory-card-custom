@@ -1274,6 +1274,10 @@ class Re extends st {
   hass;
   _config;
   _translations = {};
+  _defaultType = {
+    standard: 'custom:simple-inventory-card-custom',
+    minimal: 'custom:simple-inventory-card-custom-minimal',
+  };
   constructor() {
     (super(), (this._config = { entity: '', type: '', sort_method: fe.SORT_METHOD }));
   }
@@ -1301,7 +1305,8 @@ class Re extends st {
     }
   }
   setConfig(t) {
-    this._config = { ...t, sort_method: t.sort_method || fe.SORT_METHOD };
+    const e = t.type || (t.minimal ? this._defaultType.minimal : this._defaultType.standard);
+    this._config = { ...t, type: e, sort_method: t.sort_method || fe.SORT_METHOD };
   }
   get _entity() {
     return this._config?.entity || '';
@@ -1315,19 +1320,20 @@ class Re extends st {
       e = ze.createEntityOptions(this.hass, t),
       i = this._createSortOptions(),
       o = this._config.sort_method || fe.SORT_METHOD;
-    return (
-      !this._config.entity &&
-        t.length > 0 &&
-        (this._config.type || (this._config.type = 'custom:simple-inventory-card-custom'),
-        (this._config.entity = t[0]),
+    if (!this._config.entity && t.length > 0) {
+      const e =
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard);
+      ((this._config = { ...this._config, type: e, entity: t[0] }),
         this.dispatchEvent(
           new CustomEvent('config-changed', {
             detail: { config: this._config },
             bubbles: !0,
             composed: !0,
           }),
-        )),
-      B`
+        ));
+    }
+    return B`
       <div class="card-config">
         ${(function (t, e, i, o, r) {
           return B`
@@ -1456,8 +1462,7 @@ class Re extends st {
               })(this._translations)
         }
       </div>
-    `
-    );
+    `;
     var r, n, a, s, l, d, c;
   }
   _valueChanged(t) {
@@ -1468,7 +1473,9 @@ class Re extends st {
       ...this._config,
       entity: e,
       sort_method: this._config.sort_method || fe.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
     ((this._config = i),
       this.requestUpdate(),
@@ -1501,7 +1508,9 @@ class Re extends st {
         ...this._config,
         ...(n ? { item_click_action: r } : {}),
         sort_method: this._config.sort_method || fe.SORT_METHOD,
-        type: this._config.type || 'custom:simple-inventory-card-custom',
+        type:
+          this._config.type ||
+          (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
       };
     ((this._config = a),
       this.requestUpdate(),
@@ -1518,7 +1527,9 @@ class Re extends st {
       ...this._config,
       ...(i ? { item_click_action: i } : {}),
       sort_method: this._config.sort_method || fe.SORT_METHOD,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
     (!i && this._config.item_click_action && delete o.item_click_action,
       (this._config = o),
@@ -1562,7 +1573,9 @@ class Re extends st {
     const i = {
       ...this._config,
       sort_method: e,
-      type: this._config.type || 'custom:simple-inventory-card-custom',
+      type:
+        this._config.type ||
+        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
     };
     ((this._config = i),
       this.requestUpdate(),
@@ -3190,6 +3203,13 @@ const Be = a`
     align-items: center;
     justify-content: center;
     min-width: 44px;
+  }
+
+  .search-row .add-new-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    flex: 0 0 44px;
   }
 
   .add-new-btn:hover {
