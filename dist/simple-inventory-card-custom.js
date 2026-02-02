@@ -1279,7 +1279,7 @@ class Re extends st {
     minimal: 'custom:simple-inventory-card-custom-minimal',
   };
   constructor() {
-    (super(), (this._config = { entity: '', type: '', sort_method: fe.SORT_METHOD }));
+    super();
   }
   static get properties() {
     return { hass: { type: Object }, _config: { type: Object } };

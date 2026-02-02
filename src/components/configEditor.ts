@@ -24,7 +24,6 @@ class ConfigEditor extends LitElement {
 
   constructor() {
     super();
-    this._config = { entity: '', type: '', sort_method: DEFAULTS.SORT_METHOD };
   }
 
   static get properties() {
