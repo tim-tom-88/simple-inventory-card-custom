@@ -333,7 +333,9 @@ export const Utilities = {
         0,
         Utilities.parseNumber(formData.autoAddToListQuantity, DEFAULTS.AUTO_ADD_TO_LIST_QUANTITY),
       ),
+      barcode: formData.barcode?.trim() || '',
       todoList: formData.todoList?.trim() || DEFAULTS.TODO_LIST,
+      todoQuantityPlacement: formData.todoQuantityPlacement?.trim() || '',
       expiryDate: formData.expiryDate?.trim() || DEFAULTS.EXPIRY_DATE,
       expiryAlertDays: Math.max(
         0,
@@ -343,6 +345,8 @@ export const Utilities = {
       location: formData.location?.trim() || DEFAULTS.LOCATION,
       unit: formData.unit?.trim() || DEFAULTS.UNIT,
       description: formData.description?.trim() || DEFAULTS.DESCRIPTION,
+      desiredQuantity: Math.max(0, Utilities.parseNumber(formData.desiredQuantity, 0)),
+      price: Math.max(0, Utilities.parseNumber(formData.price, 0)),
     };
   },
 
@@ -430,19 +434,29 @@ export const Utilities = {
         0,
         Utilities.parseNumber(itemData.autoAddToListQuantity, DEFAULTS.AUTO_ADD_TO_LIST_QUANTITY),
       ),
+      barcode: this.sanitizeString(itemData.barcode, 100),
       category: this.sanitizeString(itemData.category, 50),
       description: this.sanitizeString(itemData.description, 500),
+      desiredQuantity: Math.max(
+        0,
+        Utilities.parseNumber(itemData.desiredQuantity, 0),
+      ),
       expiryAlertDays: Math.max(
         0,
         Utilities.parseNumber(itemData.expiryAlertDays, DEFAULTS.EXPIRY_ALERT_DAYS),
       ),
       expiryDate: itemData.expiryDate || DEFAULTS.EXPIRY_DATE,
       name: this.sanitizeString(itemData.name, 100),
+      price: Math.max(
+        0,
+        Utilities.parseNumber(itemData.price, 0),
+      ),
       quantity: Math.max(
         0,
         Math.min(999_999, Utilities.parseNumber(itemData.quantity, DEFAULTS.QUANTITY)),
       ),
       todoList: this.sanitizeString(itemData.todoList, 100),
+      todoQuantityPlacement: this.sanitizeString(itemData.todoQuantityPlacement, 20),
       unit: this.sanitizeString(itemData.unit, 20),
       location: this.sanitizeString(itemData.location, 50),
     };

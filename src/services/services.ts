@@ -39,13 +39,14 @@ export class Services {
         };
       }
 
-      await this.hass.callService(DOMAIN, SERVICES.ADD_ITEM, {
+      const serviceData: Record<string, any> = {
         [PARAMS.AUTO_ADD_ENABLED]: sanitizedItemData.autoAddEnabled,
         [PARAMS.AUTO_ADD_ID_TO_DESCRIPTION_ENABLED]:
           sanitizedItemData.autoAddIdToDescriptionEnabled,
         [PARAMS.AUTO_ADD_TO_LIST_QUANTITY]: sanitizedItemData.autoAddToListQuantity,
         [PARAMS.CATEGORY]: sanitizedItemData.category,
         [PARAMS.DESCRIPTION]: sanitizedItemData.description,
+        [PARAMS.DESIRED_QUANTITY]: sanitizedItemData.desiredQuantity,
         [PARAMS.EXPIRY_ALERT_DAYS]: sanitizedItemData.expiryAlertDays,
         [PARAMS.EXPIRY_DATE]: sanitizedItemData.expiryDate,
         [PARAMS.INVENTORY_ID]: sanitizedInventoryId,
@@ -53,8 +54,16 @@ export class Services {
         [PARAMS.NAME]: sanitizedItemData.name,
         [PARAMS.QUANTITY]: sanitizedItemData.quantity,
         [PARAMS.TODO_LIST]: sanitizedItemData.todoList,
+        [PARAMS.TODO_QUANTITY_PLACEMENT]: sanitizedItemData.todoQuantityPlacement,
+        [PARAMS.PRICE]: sanitizedItemData.price,
         [PARAMS.UNIT]: sanitizedItemData.unit,
-      });
+      };
+
+      if (sanitizedItemData.barcode) {
+        serviceData[PARAMS.BARCODE] = sanitizedItemData.barcode;
+      }
+
+      await this.hass.callService(DOMAIN, SERVICES.ADD_ITEM, serviceData);
       return { success: true };
     } catch (error) {
       console.error('Error adding item:', error);
@@ -165,6 +174,7 @@ export class Services {
         [PARAMS.AUTO_ADD_TO_LIST_QUANTITY]: sanitizedItemData.autoAddToListQuantity,
         [PARAMS.CATEGORY]: sanitizedItemData.category,
         [PARAMS.DESCRIPTION]: sanitizedItemData.description,
+        [PARAMS.DESIRED_QUANTITY]: sanitizedItemData.desiredQuantity,
         [PARAMS.EXPIRY_ALERT_DAYS]: sanitizedItemData.expiryAlertDays,
         [PARAMS.EXPIRY_DATE]: sanitizedItemData.expiryDate,
         [PARAMS.INVENTORY_ID]: sanitizedInventoryId,
@@ -173,6 +183,8 @@ export class Services {
         [PARAMS.OLD_NAME]: oldName,
         [PARAMS.QUANTITY]: sanitizedItemData.quantity,
         [PARAMS.TODO_LIST]: sanitizedItemData.todoList,
+        [PARAMS.TODO_QUANTITY_PLACEMENT]: sanitizedItemData.todoQuantityPlacement,
+        [PARAMS.PRICE]: sanitizedItemData.price,
         [PARAMS.UNIT]: sanitizedItemData.unit,
       };
       await this.hass.callService(DOMAIN, SERVICES.UPDATE_ITEM, parameters);
