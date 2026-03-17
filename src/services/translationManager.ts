@@ -6,7 +6,8 @@ export class TranslationManager {
   private static _cardName = 'simple-inventory-card-custom';
 
   static async loadTranslations(language: string): Promise<TranslationData> {
-    const cacheKey = `${this._cardName}-${language}`;
+    const normalizedLanguage = ((language || 'en').trim().split(/[-_]/)[0] || 'en').trim();
+    const cacheKey = `${this._cardName}-${normalizedLanguage}`;
 
     if (this._cache.has(cacheKey)) {
       return this._cache.get(cacheKey)!;
@@ -16,7 +17,7 @@ export class TranslationManager {
       return this._loadingPromises.get(cacheKey)!;
     }
 
-    const loadingPromise = this._loadTranslationsInternal(language);
+    const loadingPromise = this._loadTranslationsInternal(normalizedLanguage);
     this._loadingPromises.set(cacheKey, loadingPromise);
 
     try {
@@ -29,11 +30,12 @@ export class TranslationManager {
   }
 
   private static async _loadTranslationsInternal(language: string): Promise<TranslationData> {
+    const normalizedLanguage = ((language || 'en').trim().split(/[-_]/)[0] || 'en').trim();
     const urls = [
-      `/local/community/${this._cardName}/translations/${language}.json`,
-      `/hacsfiles/${this._cardName}/translations/${language}.json`,
-      `/local/community/${this._cardName}/${language}.json`,
-      `/hacsfiles/${this._cardName}/${language}.json`,
+      `/local/community/${this._cardName}/translations/${normalizedLanguage}.json`,
+      `/hacsfiles/${this._cardName}/translations/${normalizedLanguage}.json`,
+      `/local/community/${this._cardName}/${normalizedLanguage}.json`,
+      `/hacsfiles/${this._cardName}/${normalizedLanguage}.json`,
     ];
 
     for (const url of urls) {
@@ -50,7 +52,7 @@ export class TranslationManager {
       }
     }
 
-    if (language !== 'en') {
+    if (normalizedLanguage !== 'en') {
       return this.loadTranslations('en');
     }
 

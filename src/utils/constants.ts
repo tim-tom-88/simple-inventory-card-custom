@@ -115,6 +115,7 @@ export const DEFAULTS = {
   QUANTITY: 1,
   SORT_METHOD: 'name',
   TODO_LIST: '',
+  TODO_QUANTITY_PLACEMENT: 'none',
   UNIT: '',
 };
 

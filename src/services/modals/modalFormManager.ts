@@ -84,6 +84,10 @@ export class ModalFormManager {
       { id: `edit-${ELEMENTS.NAME}`, value: item.name ?? '' },
       { id: `edit-${ELEMENTS.QUANTITY}`, value: (item.quantity ?? DEFAULTS.QUANTITY).toString() },
       { id: `edit-${ELEMENTS.TODO_LIST}`, value: item.todo_list ?? DEFAULTS.TODO_LIST },
+      {
+        id: `edit-${ELEMENTS.TODO_QUANTITY_PLACEMENT}`,
+        value: DEFAULTS.TODO_QUANTITY_PLACEMENT,
+      },
       { id: `edit-${ELEMENTS.UNIT}`, value: item.unit ?? DEFAULTS.UNIT },
     ];
 
@@ -121,6 +125,10 @@ export class ModalFormManager {
       { id: `add-${ELEMENTS.NAME}`, value: '' },
       { id: `add-${ELEMENTS.QUANTITY}`, value: DEFAULTS.QUANTITY.toString() },
       { id: `add-${ELEMENTS.TODO_LIST}`, value: DEFAULTS.TODO_LIST },
+      {
+        id: `add-${ELEMENTS.TODO_QUANTITY_PLACEMENT}`,
+        value: DEFAULTS.TODO_QUANTITY_PLACEMENT,
+      },
       { id: `add-${ELEMENTS.UNIT}`, value: DEFAULTS.UNIT },
     ];
 

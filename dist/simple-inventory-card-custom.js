@@ -391,9 +391,9 @@ const w = globalThis,
   F = /"/g,
   H = /^(?:script|style|textarea|title)$/i,
   B = ((J = 1), (t, ...e) => ({ _$litType$: J, strings: t, values: e })),
-  j = /* @__PURE__ */ Symbol.for('lit-noChange'),
-  Y = /* @__PURE__ */ Symbol.for('lit-nothing'),
-  Q = /* @__PURE__ */ new WeakMap(),
+  Y = /* @__PURE__ */ Symbol.for('lit-noChange'),
+  Q = /* @__PURE__ */ Symbol.for('lit-nothing'),
+  j = /* @__PURE__ */ new WeakMap(),
   V = z.createTreeWalker(z, 129);
 var J;
 function W(t, e) {
@@ -502,7 +502,7 @@ class X {
   }
 }
 function Z(t, e, i = t, o) {
-  if (e === j) return e;
+  if (e === Y) return e;
   let n = void 0 !== o ? i._$Co?.[o] : i._$Cl;
   const r = L(e) ? void 0 : e._$litDirective$;
   return (
@@ -564,7 +564,7 @@ class K {
   }
   constructor(t, e, i, o) {
     ((this.type = 2),
-      (this._$AH = Y),
+      (this._$AH = Q),
       (this._$AN = void 0),
       (this._$AA = t),
       (this._$AB = e),
@@ -586,9 +586,9 @@ class K {
   _$AI(t, e = this) {
     ((t = Z(this, t, e)),
       L(t)
-        ? t === Y || null == t || '' === t
-          ? (this._$AH !== Y && this._$AR(), (this._$AH = Y))
-          : t !== this._$AH && t !== j && this._(t)
+        ? t === Q || null == t || '' === t
+          ? (this._$AH !== Q && this._$AR(), (this._$AH = Q))
+          : t !== this._$AH && t !== Y && this._(t)
         : void 0 !== t._$litType$
           ? this.$(t)
           : void 0 !== t.nodeType
@@ -604,7 +604,7 @@ class K {
     this._$AH !== t && (this._$AR(), (this._$AH = this.O(t)));
   }
   _(t) {
-    (this._$AH !== Y && L(this._$AH)
+    (this._$AH !== Q && L(this._$AH)
       ? (this._$AA.nextSibling.data = t)
       : this.T(z.createTextNode(t)),
       (this._$AH = t));
@@ -623,8 +623,8 @@ class K {
     }
   }
   _$AC(t) {
-    let e = Q.get(t.strings);
-    return (void 0 === e && Q.set(t.strings, (e = new X(t))), e);
+    let e = j.get(t.strings);
+    return (void 0 === e && j.set(t.strings, (e = new X(t))), e);
   }
   k(t) {
     M(this._$AH) || ((this._$AH = []), this._$AR());
@@ -658,7 +658,7 @@ class tt {
   }
   constructor(t, e, i, o, n) {
     ((this.type = 1),
-      (this._$AH = Y),
+      (this._$AH = Q),
       (this._$AN = void 0),
       (this.element = t),
       (this.name = e),
@@ -666,27 +666,27 @@ class tt {
       (this.options = n),
       i.length > 2 || '' !== i[0] || '' !== i[1]
         ? ((this._$AH = Array(i.length - 1).fill(new String())), (this.strings = i))
-        : (this._$AH = Y));
+        : (this._$AH = Q));
   }
   _$AI(t, e = this, i, o) {
     const n = this.strings;
     let r = !1;
     if (void 0 === n)
-      ((t = Z(this, t, e, 0)), (r = !L(t) || (t !== this._$AH && t !== j)), r && (this._$AH = t));
+      ((t = Z(this, t, e, 0)), (r = !L(t) || (t !== this._$AH && t !== Y)), r && (this._$AH = t));
     else {
       const o = t;
       let a, s;
       for (t = n[0], a = 0; a < n.length - 1; a++)
         ((s = Z(this, o[i + a], e, a)),
-          s === j && (s = this._$AH[a]),
+          s === Y && (s = this._$AH[a]),
           (r ||= !L(s) || s !== this._$AH[a]),
-          s === Y ? (t = Y) : t !== Y && (t += (s ?? '') + n[a + 1]),
+          s === Q ? (t = Q) : t !== Q && (t += (s ?? '') + n[a + 1]),
           (this._$AH[a] = s));
     }
     r && !o && this.j(t);
   }
   j(t) {
-    t === Y
+    t === Q
       ? this.element.removeAttribute(this.name)
       : this.element.setAttribute(this.name, t ?? '');
   }
@@ -696,7 +696,7 @@ class et extends tt {
     (super(...arguments), (this.type = 3));
   }
   j(t) {
-    this.element[this.name] = t === Y ? void 0 : t;
+    this.element[this.name] = t === Q ? void 0 : t;
   }
 }
 class it extends tt {
@@ -704,7 +704,7 @@ class it extends tt {
     (super(...arguments), (this.type = 4));
   }
   j(t) {
-    this.element.toggleAttribute(this.name, !!t && t !== Y);
+    this.element.toggleAttribute(this.name, !!t && t !== Q);
   }
 }
 class ot extends tt {
@@ -712,14 +712,14 @@ class ot extends tt {
     (super(t, e, i, o, n), (this.type = 5));
   }
   _$AI(t, e = this) {
-    if ((t = Z(this, t, e, 0) ?? Y) === j) return;
+    if ((t = Z(this, t, e, 0) ?? Q) === Y) return;
     const i = this._$AH,
       o =
-        (t === Y && i !== Y) ||
+        (t === Q && i !== Q) ||
         t.capture !== i.capture ||
         t.once !== i.once ||
         t.passive !== i.passive,
-      n = t !== Y && (i === Y || o);
+      n = t !== Q && (i === Q || o);
     (o && this.element.removeEventListener(this.name, this, i),
       n && this.element.addEventListener(this.name, this, t),
       (this._$AH = t));
@@ -777,7 +777,7 @@ class st extends $ {
     (super.disconnectedCallback(), this._$Do?.setConnected(!1));
   }
   render() {
-    return j;
+    return Y;
   }
 }
 ((st._$litElement$ = !0), (st.finalized = !0), at.litElementHydrateSupport?.({ LitElement: st }));
@@ -818,9 +818,9 @@ const dt = 'simple_inventory',
   Ft = 'description',
   Ht = 'desired-quantity',
   Bt = 'expiry-alert-days',
-  jt = 'expiry-date',
-  Yt = 'location',
-  Qt = 'name',
+  Yt = 'expiry-date',
+  Qt = 'location',
+  jt = 'name',
   Vt = 'price',
   Jt = 'quantity',
   Wt = 'todo-list',
@@ -866,6 +866,7 @@ const dt = 'simple_inventory',
     QUANTITY: 1,
     SORT_METHOD: 'name',
     TODO_LIST: '',
+    TODO_QUANTITY_PLACEMENT: 'none',
     UNIT: '',
   },
   Ie = 'category',
@@ -1051,7 +1052,7 @@ const dt = 'simple_inventory',
       ),
       barcode: t.barcode?.trim() || '',
       todoList: t.todoList?.trim() || Te.TODO_LIST,
-      todoQuantityPlacement: t.todoQuantityPlacement?.trim() || '',
+      todoQuantityPlacement: t.todoQuantityPlacement?.trim() || Te.TODO_QUANTITY_PLACEMENT,
       expiryDate: t.expiryDate?.trim() || Te.EXPIRY_DATE,
       expiryAlertDays: Math.max(0, Ue.parseNumber(t.expiryAlertDays, Te.EXPIRY_ALERT_DAYS)),
       category: t.category?.trim() || Te.CATEGORY,
@@ -1106,7 +1107,8 @@ const dt = 'simple_inventory',
         price: Math.max(0, Ue.parseNumber(t.price, 0)),
         quantity: Math.max(0, Math.min(999999, Ue.parseNumber(t.quantity, Te.QUANTITY))),
         todoList: this.sanitizeString(t.todoList, 100),
-        todoQuantityPlacement: this.sanitizeString(t.todoQuantityPlacement, 20),
+        todoQuantityPlacement:
+          this.sanitizeString(t.todoQuantityPlacement, 20) || Te.TODO_QUANTITY_PLACEMENT,
         unit: this.sanitizeString(t.unit, 20),
         location: this.sanitizeString(t.location, 50),
       };
@@ -1177,36 +1179,38 @@ class Fe {
   static _loadingPromises = /* @__PURE__ */ new Map();
   static _cardName = 'simple-inventory-card-custom';
   static async loadTranslations(t) {
-    const e = `${this._cardName}-${t}`;
-    if (this._cache.has(e)) return this._cache.get(e);
-    if (this._loadingPromises.has(e)) return this._loadingPromises.get(e);
-    const i = this._loadTranslationsInternal(t);
-    this._loadingPromises.set(e, i);
+    const e = ((t || 'en').trim().split(/[-_]/)[0] || 'en').trim(),
+      i = `${this._cardName}-${e}`;
+    if (this._cache.has(i)) return this._cache.get(i);
+    if (this._loadingPromises.has(i)) return this._loadingPromises.get(i);
+    const o = this._loadTranslationsInternal(e);
+    this._loadingPromises.set(i, o);
     try {
-      const t = await i;
-      return (this._cache.set(e, t), t);
+      const t = await o;
+      return (this._cache.set(i, t), t);
     } finally {
-      this._loadingPromises.delete(e);
+      this._loadingPromises.delete(i);
     }
   }
   static async _loadTranslationsInternal(t) {
-    const e = [
-      `/local/community/${this._cardName}/translations/${t}.json`,
-      `/hacsfiles/${this._cardName}/translations/${t}.json`,
-      `/local/community/${this._cardName}/${t}.json`,
-      `/hacsfiles/${this._cardName}/${t}.json`,
-    ];
-    for (const o of e)
+    const e = ((t || 'en').trim().split(/[-_]/)[0] || 'en').trim(),
+      i = [
+        `/local/community/${this._cardName}/translations/${e}.json`,
+        `/hacsfiles/${this._cardName}/translations/${e}.json`,
+        `/local/community/${this._cardName}/${e}.json`,
+        `/hacsfiles/${this._cardName}/${e}.json`,
+      ];
+    for (const n of i)
       try {
-        const t = await fetch(o);
+        const t = await fetch(n);
         if (t.ok) {
           return await t.json();
         }
-        console.debug('❌ Failed to load from', o, 'Status:', t.status);
-      } catch (i) {
-        console.debug(`Failed to load translations from ${o}:`, i);
+        console.debug('❌ Failed to load from', n, 'Status:', t.status);
+      } catch (o) {
+        console.debug(`Failed to load translations from ${n}:`, o);
       }
-    return 'en' !== t ? this.loadTranslations('en') : {};
+    return 'en' !== e ? this.loadTranslations('en') : {};
   }
   static localize(t, e, i, o) {
     const n = e.split('.');
@@ -1642,7 +1646,7 @@ class Be extends st {
     return He;
   }
 }
-class je {
+class Ye {
   hass;
   constructor(t) {
     this.hass = t;
@@ -1808,7 +1812,7 @@ class je {
     return t;
   }
 }
-class Ye {
+class Qe {
   constructor(t) {
     this.shadowRoot = t;
   }
@@ -1822,9 +1826,9 @@ class Ye {
       description: this.getInputValue(`add-${Ft}`),
       desiredQuantity: this.getInputValue(`add-${Ht}`),
       expiryAlertDays: this.getInputValue(`add-${Bt}`),
-      expiryDate: this.getInputValue(`add-${jt}`),
-      location: this.getInputValue(`add-${Yt}`),
-      name: this.getInputValue(`add-${Qt}`),
+      expiryDate: this.getInputValue(`add-${Yt}`),
+      location: this.getInputValue(`add-${Qt}`),
+      name: this.getInputValue(`add-${jt}`),
       price: this.getInputValue(`add-${Vt}`),
       quantity: this.getInputValue(`add-${Jt}`),
       todoList: this.getInputValue(`add-${Wt}`),
@@ -1842,9 +1846,9 @@ class Ye {
       description: this.getInputValue(`edit-${Ft}`),
       desiredQuantity: this.getInputValue(`edit-${Ht}`),
       expiryAlertDays: this.getInputValue(`edit-${Bt}`),
-      expiryDate: this.getInputValue(`edit-${jt}`),
-      location: this.getInputValue(`edit-${Yt}`),
-      name: this.getInputValue(`edit-${Qt}`),
+      expiryDate: this.getInputValue(`edit-${Yt}`),
+      location: this.getInputValue(`edit-${Qt}`),
+      name: this.getInputValue(`edit-${jt}`),
       price: this.getInputValue(`edit-${Vt}`),
       quantity: this.getInputValue(`edit-${Jt}`),
       todoList: this.getInputValue(`edit-${Wt}`),
@@ -1861,11 +1865,12 @@ class Ye {
       { id: `edit-${Ut}`, value: t.category ?? Te.CATEGORY },
       { id: `edit-${Ft}`, value: t.description ?? Te.DESCRIPTION },
       { id: `edit-${Bt}`, value: (t.expiry_alert_days ?? Te.EXPIRY_ALERT_DAYS).toString() },
-      { id: `edit-${jt}`, value: t.expiry_date ?? Te.EXPIRY_DATE },
-      { id: `edit-${Yt}`, value: t.location ?? Te.LOCATION },
-      { id: `edit-${Qt}`, value: t.name ?? '' },
+      { id: `edit-${Yt}`, value: t.expiry_date ?? Te.EXPIRY_DATE },
+      { id: `edit-${Qt}`, value: t.location ?? Te.LOCATION },
+      { id: `edit-${jt}`, value: t.name ?? '' },
       { id: `edit-${Jt}`, value: (t.quantity ?? Te.QUANTITY).toString() },
       { id: `edit-${Wt}`, value: t.todo_list ?? Te.TODO_LIST },
+      { id: `edit-${Xt}`, value: Te.TODO_QUANTITY_PLACEMENT },
       { id: `edit-${Zt}`, value: t.unit ?? Te.UNIT },
     ];
     this.setFormValues(e);
@@ -1880,11 +1885,12 @@ class Ye {
       { id: `add-${Ut}`, value: Te.CATEGORY },
       { id: `add-${Ft}`, value: Te.DESCRIPTION },
       { id: `add-${Bt}`, value: Te.EXPIRY_ALERT_DAYS.toString() },
-      { id: `add-${jt}`, value: Te.EXPIRY_DATE },
-      { id: `add-${Yt}`, value: Te.LOCATION },
-      { id: `add-${Qt}`, value: '' },
+      { id: `add-${Yt}`, value: Te.EXPIRY_DATE },
+      { id: `add-${Qt}`, value: Te.LOCATION },
+      { id: `add-${jt}`, value: '' },
       { id: `add-${Jt}`, value: Te.QUANTITY.toString() },
       { id: `add-${Wt}`, value: Te.TODO_LIST },
+      { id: `add-${Xt}`, value: Te.TODO_QUANTITY_PLACEMENT },
       { id: `add-${Zt}`, value: Te.UNIT },
     ];
     this.setFormValues(t);
@@ -1911,7 +1917,7 @@ class Ye {
     return this.shadowRoot.getElementById(t);
   }
 }
-class Qe {
+class je {
   constructor(t, e, i) {
     ((this.shadowRoot = t),
       (this.formManager = e),
@@ -1924,7 +1930,7 @@ class Qe {
     e
       ? (this.validationManager.clearError(!0),
         e.classList.add(fe),
-        this.focusElementWithDelay(Qt),
+        this.focusElementWithDelay(jt),
         this.setupExpiryThresholdInteraction(t),
         this.validationManager.setupValidationListeners())
       : console.warn('Add modal not found in DOM');
@@ -1946,7 +1952,7 @@ class Qe {
       l &&
         (this.validationManager.clearError(!1),
         l.classList.add(fe),
-        this.focusElementWithDelay(Qt, !0),
+        this.focusElementWithDelay(jt, !0),
         this.setupExpiryThresholdInteraction(i),
         this.validationManager.setupValidationListeners()),
       { item: s, found: !0 }
@@ -1977,7 +1983,7 @@ class Qe {
   }
   setupExpiryThresholdFieldForModal(t, e) {
     const i = t ? 'add' : 'edit',
-      o = this.getElement(`${i}-${jt}`);
+      o = this.getElement(`${i}-${Yt}`);
     o &&
       (this.updateExpiryThresholdState(t, e),
       o.addEventListener('input', () => {
@@ -1989,7 +1995,7 @@ class Qe {
   }
   updateExpiryThresholdState(t, e) {
     const i = t ? 'add' : 'edit',
-      o = this.getElement(`${i}-${jt}`),
+      o = this.getElement(`${i}-${Yt}`),
       n = this.getElement(`${i}-${Bt}`);
     if (!o || !n) return;
     if ('' !== o.value.trim())
@@ -2041,7 +2047,7 @@ class Ve {
       let t = '';
       switch (o.field) {
         case 'name':
-          t = `${i}-${Qt}`;
+          t = `${i}-${jt}`;
           break;
         case 'quantity':
           t = `${i}-${Jt}`;
@@ -2053,7 +2059,7 @@ class Ve {
           t = `${i}-${Wt}`;
           break;
         case 'expiryDate':
-          t = `${i}-${jt}`;
+          t = `${i}-${Yt}`;
           break;
         case 'expiryAlertDays':
           t = `${i}-${Bt}`;
@@ -2096,8 +2102,8 @@ class Ve {
         this.getElement(`${e}-${Jt}`),
         this.getElement(`${e}-${qt}`),
         this.getElement(`${e}-${Wt}`),
-        this.getElement(`${e}-${Qt}`),
         this.getElement(`${e}-${jt}`),
+        this.getElement(`${e}-${Yt}`),
       ],
       o = this.getElement(`${e}-${Nt}`),
       n = this.getElement(`${e}-${qt}`),
@@ -2201,9 +2207,9 @@ class We {
     ((this.services = e),
       (this.getInventoryId = i),
       (this.onDataChanged = o),
-      (this.formManager = new Ye(t)),
+      (this.formManager = new Qe(t)),
       (this.validationManager = new Ve(t)),
-      (this.uiManager = new Qe(t, this.formManager, this.validationManager)),
+      (this.uiManager = new je(t, this.formManager, this.validationManager)),
       (this.shadowRoot = t));
   }
   formManager;
@@ -2293,7 +2299,7 @@ class We {
   }
   initializeAutoCompleteInputs(t, e, i) {
     setTimeout(() => {
-      (Je({ id: `${t}-${Yt}`, options: e, shadowRoot: this.shadowRoot }),
+      (Je({ id: `${t}-${Qt}`, options: e, shadowRoot: this.shadowRoot }),
         Je({ id: `${t}-${Ut}`, options: i, shadowRoot: this.shadowRoot }));
     }, 0);
   }
@@ -3927,7 +3933,7 @@ function ii(t, e, i, o = [], n = []) {
     t,
     e,
   ) {
-    return `\n    <div class="form-group">\n      <label for="${t}-${Qt}" class="form-label">\n        ${Fe.localize(e, 'modal.name_required', void 0, 'Name *')}\n      </label>\n      <input type="text" id="${t}-${Qt}" required />\n    </div> \n  `;
+    return `\n    <div class="form-group">\n      <label for="${t}-${jt}" class="form-label">\n        ${Fe.localize(e, 'modal.name_required', void 0, 'Name *')}\n      </label>\n      <input type="text" id="${t}-${jt}" required />\n    </div> \n  `;
   })(r, i)}\n          ${(function (t, e) {
     return `\n    <div class="form-group">\n      <label for="${t}-${Ft}" class="form-label">\n        ${Fe.localize(e, 'modal.description', void 0, 'Description')}\n      </label>\n      <input type="text" id="${t}-${Ft}" placeholder="${Fe.localize(e, 'modal.description_placeholder', void 0, 'Item description')}" />\n    </div> \n  `;
   })(r, i)}\n          ${(function (t, e) {
@@ -3943,12 +3949,12 @@ function ii(t, e, i, o = [], n = []) {
   ) {
     return `\n    <div class="input-group">\n      <label for="${t}-${Ut}" class="form-label">\n        ${Fe.localize(e, 'modal.category', void 0, 'Category')}\n      </label>\n      ${ei({ id: `${t}-${Ut}`, placeholder: Fe.localize(e, 'modal.category_placeholder', void 0, 'Food, Tools, Supplies, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
   })(r, i, o)}\n            ${(function (t, e, i = []) {
-    return `\n    <div class="input-group">\n      <label for="${t}-${Yt}" class="form-label">\n        ${Fe.localize(e, 'modal.location', void 0, 'Location')}\n      </label>\n      ${ei({ id: `${t}-${Yt}`, placeholder: Fe.localize(e, 'modal.location_placeholder', void 0, 'Pantry, Garage Shelf, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
+    return `\n    <div class="input-group">\n      <label for="${t}-${Qt}" class="form-label">\n        ${Fe.localize(e, 'modal.location', void 0, 'Location')}\n      </label>\n      ${ei({ id: `${t}-${Qt}`, placeholder: Fe.localize(e, 'modal.location_placeholder', void 0, 'Pantry, Garage Shelf, etc.'), options: i.sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' })) })}\n    </div>\n  `;
   })(r, i, n)}\n          </div>\n\n          <div class="form-row">\n            ${(function (
     t,
     e,
   ) {
-    return `\n    <div class="input-group">\n      <label for="${t}-${jt}" class="form-label">\n        ${Fe.localize(e, 'modal.expiry_date', void 0, 'Expiry Date')}\n      </label>\n      <input type="date" id="${t}-${jt}" />\n    </div>\n  `;
+    return `\n    <div class="input-group">\n      <label for="${t}-${Yt}" class="form-label">\n        ${Fe.localize(e, 'modal.expiry_date', void 0, 'Expiry Date')}\n      </label>\n      <input type="date" id="${t}-${Yt}" />\n    </div>\n  `;
   })(r, i)}\n            ${(function (t, e) {
     return `\n    <div class="input-group expiry-threshold-section">\n      <label for="${t}-${Bt}" class="form-label">\n        ${Fe.localize(e, 'modal.expiry_alert_threshold', void 0, 'Expiry Alert Threshold')}\n        <span class="optional">\n          ${Fe.localize(e, 'modal.days_before_expiry', void 0, '(days before expiry)')}\n        </span>\n      </label>\n      <input \n        type="number" \n        id="${t}-${Bt}" \n        min="1" \n        max="365"\n        placeholder="${Fe.localize(e, 'modal.set_expiry_first', void 0, 'Set expiry date first')}"\n        disabled\n      />\n      <small class="help-text">\n        ${Fe.localize(e, 'modal.expiry_help_text', void 0, 'How many days before expiry to show alerts')}\n      </small>\n    </div>\n  `;
   })(
@@ -4622,7 +4628,7 @@ class yi {
     if (this.isInitialized && this.services) return this.services;
     if (t && e && this.renderRoot)
       try {
-        const s = new je(t),
+        const s = new Ye(t),
           l = new Ze(this.renderRoot),
           d = new ui(this.renderRoot),
           c = new hi();

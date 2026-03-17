@@ -345,7 +345,8 @@ export const Utilities = {
       ),
       barcode: formData.barcode?.trim() || '',
       todoList: formData.todoList?.trim() || DEFAULTS.TODO_LIST,
-      todoQuantityPlacement: formData.todoQuantityPlacement?.trim() || '',
+      todoQuantityPlacement:
+        formData.todoQuantityPlacement?.trim() || DEFAULTS.TODO_QUANTITY_PLACEMENT,
       expiryDate: formData.expiryDate?.trim() || DEFAULTS.EXPIRY_DATE,
       expiryAlertDays: Math.max(
         0,
@@ -460,7 +461,8 @@ export const Utilities = {
         Math.min(999_999, Utilities.parseNumber(itemData.quantity, DEFAULTS.QUANTITY)),
       ),
       todoList: this.sanitizeString(itemData.todoList, 100),
-      todoQuantityPlacement: this.sanitizeString(itemData.todoQuantityPlacement, 20),
+      todoQuantityPlacement:
+        this.sanitizeString(itemData.todoQuantityPlacement, 20) || DEFAULTS.TODO_QUANTITY_PLACEMENT,
       unit: this.sanitizeString(itemData.unit, 20),
       location: this.sanitizeString(itemData.location, 50),
     };
