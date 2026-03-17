@@ -3997,9 +3997,18 @@ function ai(t, e, i, o, n = !1, r = !1) {
   return 'category' === e ? si(t, i, o, n) : 'location' === e ? li(t, i, o, n) : di(t, i, o, n, r);
 }
 function si(t, e, i, o = !1, n = !1) {
-  const r = Ue.groupItemsByCategory(t);
-  return Object.keys(r)
-    .sort()
+  const r = Ue.groupItemsByCategory(t),
+    a = Object.keys(r).sort();
+  if (n) {
+    return di(
+      a.flatMap((t) => r[t]),
+      e,
+      i,
+      o,
+      n,
+    );
+  }
+  return a
     .map(
       (t) =>
         `\n        <div class="${ce}">\n          <div class="${pe}">${t}</div>\n          ${di(r[t], e, i, o, n)}\n        </div>\n      `,
@@ -4007,9 +4016,18 @@ function si(t, e, i, o = !1, n = !1) {
     .join('');
 }
 function li(t, e, i, o = !1, n = !1) {
-  const r = Ue.groupItemsByLocation(t);
-  return Object.keys(r)
-    .sort()
+  const r = Ue.groupItemsByLocation(t),
+    a = Object.keys(r).sort();
+  if (n) {
+    return di(
+      a.flatMap((t) => r[t]),
+      e,
+      i,
+      o,
+      n,
+    );
+  }
+  return a
     .map(
       (t) =>
         `\n        <div class="${ue}">\n          <div class="${me}">${t}</div>\n          ${di(r[t], e, i, o, n)}\n        </div>\n`,

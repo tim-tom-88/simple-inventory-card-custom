@@ -49,6 +49,11 @@ export function createItemsByCategory(
   const grouped = Utilities.groupItemsByCategory(items);
   const sortedCategories = Object.keys(grouped).sort();
 
+  if (grid) {
+    const orderedItems = sortedCategories.flatMap((category) => grouped[category]);
+    return renderItemsCollection(orderedItems, todoLists, translations, minimal, grid);
+  }
+
   return sortedCategories
     .map(
       (category) => `
@@ -70,6 +75,12 @@ export function createItemsByLocation(
 ): string {
   const grouped = Utilities.groupItemsByLocation(items);
   const sortedLocations = Object.keys(grouped).sort();
+
+  if (grid) {
+    const orderedItems = sortedLocations.flatMap((location) => grouped[location]);
+    return renderItemsCollection(orderedItems, todoLists, translations, minimal, grid);
+  }
+
   return sortedLocations
     .map(
       (location) => `
