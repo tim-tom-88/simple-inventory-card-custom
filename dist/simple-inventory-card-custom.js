@@ -2547,6 +2547,7 @@ const Ge = a`
   ${a`
   ha-card {
     padding: 16px;
+    position: relative;
   }
 
   .inventory-title {
@@ -2565,6 +2566,10 @@ const Ge = a`
   .active-filters {
     display: block;
     padding: 8px 16px;
+    position: sticky;
+    top: 88px;
+    z-index: 8;
+    background: var(--card-background-color, #fff);
   }
 
   .filter-badges-container {
@@ -2840,6 +2845,13 @@ const Ge = a`
   }
 
   .item-grid-meta .quantity {
+    font-size: 1.6em;
+    line-height: 1;
+  }
+
+  .item-grid-location {
+    font-weight: bold;
+    color: var(--primary-color);
     font-size: 1.6em;
     line-height: 1;
   }
@@ -3600,6 +3612,9 @@ const Ge = a`
     padding: 12px;
     background: var(--secondary-background-color, #f5f5f5);
     border-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   .search-row {
@@ -4043,9 +4058,8 @@ function di(t, e, i, o, n) {
     .map((t) =>
       n
         ? (function (t, e, i) {
-            const o = oi(t, i, t.expiry_alert_days),
-              n = t.unit ? `${t.quantity} ${t.unit}` : `${t.quantity}`;
-            return `\n    <div class="item-row item-grid-card ${0 === t.quantity ? 'zero-quantity' : ''} ${t.auto_add_enabled ? 'auto-add-enabled' : ''}" data-action="item_click" data-name="${t.name}">\n      <div class="item-grid-content">\n        <div class="item-grid-main">\n          <span class="item-name">${t.name}</span>\n          ${t.description ? `<span class="item-grid-description">${t.description}</span>` : ni(t)}\n        </div>\n        <div class="item-grid-footer">\n          <div class="item-grid-meta">\n            <span class="quantity">${n}</span>\n            ${o ? `<span class="expiry ${o.class}">${o.label}</span>` : ''}\n            ${t.description && (t.location || t.category) ? ni(t) : ''}\n            ${t.auto_add_enabled ? ri(t, e, i) : ''}\n          </div>\n          <div class="item-grid-actions">\n            <div class="item-grid-menu">\n              <button class="grid-menu-btn grid-action-btn" data-action="toggle_item_menu" data-name="${t.name}" aria-label="Toggle item actions" aria-expanded="false">\n                <ha-icon icon="mdi:chevron-double-right"></ha-icon>\n              </button>\n              <div class="item-grid-menu-panel">\n                <button class="grid-action-btn" data-action="open_edit" data-name="${t.name}" aria-label="Edit item">\n                  <ha-icon icon="mdi:pencil"></ha-icon>\n                </button>\n                <button class="grid-action-btn" data-action="remove" data-name="${t.name}" aria-label="Remove item">\n                  <ha-icon icon="mdi:trash-can-outline"></ha-icon>\n                </button>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;
+            const o = oi(t, i, t.expiry_alert_days);
+            return `\n    <div class="item-row item-grid-card ${0 === t.quantity ? 'zero-quantity' : ''} ${t.auto_add_enabled ? 'auto-add-enabled' : ''}" data-action="item_click" data-name="${t.name}">\n      <div class="item-grid-content">\n        <div class="item-grid-main">\n          <span class="item-name">${t.name}</span>\n          ${t.description ? `<span class="item-grid-description">${t.description}</span>` : ''}\n        </div>\n        <div class="item-grid-footer">\n          <div class="item-grid-meta">\n            ${t.location ? `<span class="item-grid-location">${t.location}</span>` : ''}\n            ${o ? `<span class="expiry ${o.class}">${o.label}</span>` : ''}\n            ${t.auto_add_enabled ? ri(t, e, i) : ''}\n          </div>\n          <div class="item-grid-actions">\n            <div class="item-grid-menu">\n              <button class="grid-menu-btn grid-action-btn" data-action="toggle_item_menu" data-name="${t.name}" aria-label="Toggle item actions" aria-expanded="false">\n                <ha-icon icon="mdi:chevron-double-right"></ha-icon>\n              </button>\n              <div class="item-grid-menu-panel">\n                <button class="grid-action-btn" data-action="open_edit" data-name="${t.name}" aria-label="Edit item">\n                  <ha-icon icon="mdi:pencil"></ha-icon>\n                </button>\n                <button class="grid-action-btn" data-action="remove" data-name="${t.name}" aria-label="Remove item">\n                  <ha-icon icon="mdi:trash-can-outline"></ha-icon>\n                </button>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  `;
           })(t, e, i)
         : o
           ? (function (t, e, i) {

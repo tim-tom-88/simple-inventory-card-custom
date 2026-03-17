@@ -233,6 +233,13 @@ export const itemRowStyles: CSSResult = css`
     line-height: 1;
   }
 
+  .item-grid-location {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.6em;
+    line-height: 1;
+  }
+
   .item-grid-meta .expiry,
   .item-grid-meta .location,
   .item-grid-meta .category,

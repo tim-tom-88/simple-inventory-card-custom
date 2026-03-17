@@ -3,6 +3,7 @@ import { CSSResult, css } from 'lit-element';
 export const cardLayoutStyles: CSSResult = css`
   ha-card {
     padding: 16px;
+    position: relative;
   }
 
   .inventory-title {
@@ -21,6 +22,10 @@ export const cardLayoutStyles: CSSResult = css`
   .active-filters {
     display: block;
     padding: 8px 16px;
+    position: sticky;
+    top: 88px;
+    z-index: 8;
+    background: var(--card-background-color, #fff);
   }
 
   .filter-badges-container {

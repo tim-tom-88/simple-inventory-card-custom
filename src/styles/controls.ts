@@ -20,6 +20,9 @@ export const controlStyles: CSSResult = css`
     padding: 12px;
     background: var(--secondary-background-color, #f5f5f5);
     border-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   .search-row {

@@ -179,24 +179,18 @@ export function createGridItemRowTemplate(
   translations: TranslationData,
 ): string {
   const expiryInfo = getExpiryStatus(item, translations, item.expiry_alert_days);
-  const quantityLabel = item.unit ? `${item.quantity} ${item.unit}` : `${item.quantity}`;
 
   return `
     <div class="item-row item-grid-card ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''}" data-action="item_click" data-name="${item.name}">
       <div class="item-grid-content">
         <div class="item-grid-main">
           <span class="item-name">${item.name}</span>
-          ${
-            item.description
-              ? `<span class="item-grid-description">${item.description}</span>`
-              : renderLocationAndCategory(item)
-          }
+          ${item.description ? `<span class="item-grid-description">${item.description}</span>` : ''}
         </div>
         <div class="item-grid-footer">
           <div class="item-grid-meta">
-            <span class="quantity">${quantityLabel}</span>
+            ${item.location ? `<span class="item-grid-location">${item.location}</span>` : ''}
             ${expiryInfo ? `<span class="expiry ${expiryInfo.class}">${expiryInfo.label}</span>` : ''}
-            ${item.description && (item.location || item.category) ? renderLocationAndCategory(item) : ''}
             ${item.auto_add_enabled ? renderAutoAddInfo(item, todoLists, translations) : ''}
           </div>
           <div class="item-grid-actions">
