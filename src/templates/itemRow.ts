@@ -172,3 +172,50 @@ export function createMinimalItemRowTemplate(
     </div>
   `;
 }
+
+export function createGridItemRowTemplate(
+  item: InventoryItem,
+  todoLists: TodoList[],
+  translations: TranslationData,
+): string {
+  const expiryInfo = getExpiryStatus(item, translations, item.expiry_alert_days);
+  const quantityLabel = item.unit ? `${item.quantity} ${item.unit}` : `${item.quantity}`;
+
+  return `
+    <div class="item-row item-grid-card ${item.quantity === 0 ? 'zero-quantity' : ''} ${item.auto_add_enabled ? 'auto-add-enabled' : ''}" data-action="item_click" data-name="${item.name}">
+      <div class="item-grid-content">
+        <div class="item-grid-main">
+          <span class="item-name">${item.name}</span>
+          ${
+            item.description
+              ? `<span class="item-grid-description">${item.description}</span>`
+              : renderLocationAndCategory(item)
+          }
+        </div>
+        <div class="item-grid-footer">
+          <div class="item-grid-meta">
+            <span class="quantity">${quantityLabel}</span>
+            ${expiryInfo ? `<span class="expiry ${expiryInfo.class}">${expiryInfo.label}</span>` : ''}
+            ${item.description && (item.location || item.category) ? renderLocationAndCategory(item) : ''}
+            ${item.auto_add_enabled ? renderAutoAddInfo(item, todoLists, translations) : ''}
+          </div>
+          <div class="item-grid-actions">
+            <div class="item-grid-menu">
+              <button class="grid-menu-btn grid-action-btn" data-action="toggle_item_menu" data-name="${item.name}" aria-label="Toggle item actions" aria-expanded="false">
+                <ha-icon icon="mdi:chevron-double-right"></ha-icon>
+              </button>
+              <div class="item-grid-menu-panel">
+                <button class="grid-action-btn" data-action="open_edit" data-name="${item.name}" aria-label="Edit item">
+                  <ha-icon icon="mdi:pencil"></ha-icon>
+                </button>
+                <button class="grid-action-btn" data-action="remove" data-name="${item.name}" aria-label="Remove item">
+                  <ha-icon icon="mdi:trash-can-outline"></ha-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}

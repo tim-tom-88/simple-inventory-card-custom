@@ -2,7 +2,11 @@ import { CSS_CLASSES } from '../utils/constants';
 import { InventoryItem } from '../types/homeAssistant';
 import { TodoList } from '../types/todoList';
 import { Utilities } from '../utils/utilities';
-import { createItemRowTemplate, createMinimalItemRowTemplate } from './itemRow';
+import {
+  createGridItemRowTemplate,
+  createItemRowTemplate,
+  createMinimalItemRowTemplate,
+} from './itemRow';
 import { TranslationData } from '@/types/translatableComponent';
 import { TranslationManager } from '@/services/translationManager';
 
@@ -12,6 +16,7 @@ export function createItemsList(
   todoLists: TodoList[],
   translations: TranslationData,
   minimal = false,
+  grid = false,
 ): string {
   if (items.length === 0) {
     const noItemsMessage = TranslationManager.localize(
@@ -31,13 +36,7 @@ export function createItemsList(
     return createItemsByLocation(items, todoLists, translations, minimal);
   }
 
-  return items
-    .map((item) =>
-      minimal
-        ? createMinimalItemRowTemplate(item, todoLists, translations)
-        : createItemRowTemplate(item, todoLists, translations),
-    )
-    .join('');
+  return renderItemsCollection(items, todoLists, translations, minimal, grid);
 }
 
 export function createItemsByCategory(
@@ -45,6 +44,7 @@ export function createItemsByCategory(
   todoLists: TodoList[],
   translations: TranslationData,
   minimal = false,
+  grid = false,
 ): string {
   const grouped = Utilities.groupItemsByCategory(items);
   const sortedCategories = Object.keys(grouped).sort();
@@ -54,13 +54,7 @@ export function createItemsByCategory(
       (category) => `
         <div class="${CSS_CLASSES.CATEGORY_GROUP}">
           <div class="${CSS_CLASSES.CATEGORY_HEADER}">${category}</div>
-          ${grouped[category]
-            .map((item) =>
-              minimal
-                ? createMinimalItemRowTemplate(item, todoLists, translations)
-                : createItemRowTemplate(item, todoLists, translations),
-            )
-            .join('')}
+          ${renderItemsCollection(grouped[category], todoLists, translations, minimal, grid)}
         </div>
       `,
     )
@@ -72,6 +66,7 @@ export function createItemsByLocation(
   todoLists: TodoList[],
   translations: TranslationData,
   minimal = false,
+  grid = false,
 ): string {
   const grouped = Utilities.groupItemsByLocation(items);
   const sortedLocations = Object.keys(grouped).sort();
@@ -80,15 +75,31 @@ export function createItemsByLocation(
       (location) => `
         <div class="${CSS_CLASSES.LOCATION_GROUP}">
           <div class="${CSS_CLASSES.LOCATION_HEADER}">${location}</div>
-          ${grouped[location]
-            .map((item) =>
-              minimal
-                ? createMinimalItemRowTemplate(item, todoLists, translations)
-                : createItemRowTemplate(item, todoLists, translations),
-            )
-            .join('')}
+          ${renderItemsCollection(grouped[location], todoLists, translations, minimal, grid)}
         </div>
 `,
     )
     .join('');
+}
+
+function renderItemsCollection(
+  items: InventoryItem[],
+  todoLists: TodoList[],
+  translations: TranslationData,
+  minimal: boolean,
+  grid: boolean,
+): string {
+  const content = items
+    .map((item) => {
+      if (grid) {
+        return createGridItemRowTemplate(item, todoLists, translations);
+      }
+
+      return minimal
+        ? createMinimalItemRowTemplate(item, todoLists, translations)
+        : createItemRowTemplate(item, todoLists, translations);
+    })
+    .join('');
+
+  return grid ? `<div class="item-grid">${content}</div>` : content;
 }

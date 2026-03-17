@@ -22,6 +22,7 @@ export function generateCardHTML(
   description: string | undefined,
   translations: TranslationData,
   minimal = false,
+  grid = false,
 ): string {
   return `
     <style>${styles}</style>
@@ -34,10 +35,10 @@ export function generateCardHTML(
 
       ${createActiveFiltersDisplay(filters, translations)}
 
-      <div class="items-container">
+      <div class="items-container ${grid ? 'items-container-grid' : ''}">
         ${
           items.length > 0
-            ? createItemsList(items, sortMethod, todoLists, translations, minimal)
+            ? createItemsList(items, sortMethod, todoLists, translations, minimal, grid)
             : `<div class="empty-state">${TranslationManager.localize(translations, 'items.no_items', undefined, 'No items in inventory')}</div>`
         }
       </div>

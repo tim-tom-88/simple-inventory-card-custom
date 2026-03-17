@@ -172,4 +172,120 @@ export const itemRowStyles: CSSResult = css`
     border-radius: 6px;
     border-left: 4px solid var(--primary-color);
   }
+
+  .item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .item-grid-card {
+    margin-bottom: 0;
+    min-height: 168px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .item-grid-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 168px;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .item-grid-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .item-grid-main .item-name {
+    font-size: 1.4em;
+    line-height: 1.2;
+  }
+
+  .item-grid-description {
+    font-size: 1.05em;
+    color: var(--secondary-text-color);
+    word-break: break-word;
+  }
+
+  .item-grid-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .item-grid-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .item-grid-meta .quantity {
+    font-size: 1.6em;
+    line-height: 1;
+  }
+
+  .item-grid-meta .expiry,
+  .item-grid-meta .location,
+  .item-grid-meta .category,
+  .item-grid-meta .location-category,
+  .item-grid-meta .auto-add-info {
+    font-size: 0.85em;
+  }
+
+  .item-grid-actions {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .item-grid-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .item-grid-menu-panel {
+    display: none;
+    gap: 8px;
+  }
+
+  .item-grid-card.menu-open .item-grid-menu-panel {
+    display: flex;
+  }
+
+  .item-grid-card.menu-open .grid-menu-btn ha-icon {
+    transform: rotate(180deg);
+  }
+
+  .grid-action-btn {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0;
+    border: 1px solid var(--divider-color, #d0d0d0);
+    border-radius: 12px;
+    background: var(--card-background-color, #ffffff);
+    color: var(--primary-text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  }
+
+  .grid-action-btn ha-icon {
+    --mdc-icon-size: 24px;
+    transition: transform 0.2s ease;
+  }
 `;

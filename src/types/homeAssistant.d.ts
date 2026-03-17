@@ -168,6 +168,7 @@ export interface InventoryConfig extends LovelaceCardConfig {
   type: string;
   entity: string;
   item_click_action?: ItemClickActionConfig;
+  grid?: boolean;
   minimal?: boolean;
   sort_method?: string;
 }

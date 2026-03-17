@@ -96,6 +96,13 @@ export class EventHandler {
     }
 
     if (actionTarget?.dataset.action && actionTarget?.dataset.name) {
+      if (actionTarget.dataset.action === ACTIONS.TOGGLE_ITEM_MENU) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.toggleItemMenu(actionTarget);
+        return;
+      }
+
       event.preventDefault();
       event.stopPropagation();
       await this.handleItemAction(
@@ -297,13 +304,23 @@ export class EventHandler {
     } finally {
       setTimeout(() => {
         if (button.tagName === 'BUTTON') {
-          button.setAttribute('data-processing', 'true');
+          button.removeAttribute('data-processing');
           button.removeAttribute('disabled');
           button.style.opacity = '1';
           button.style.pointerEvents = 'auto';
         }
       }, 200);
     }
+  }
+
+  private toggleItemMenu(button: HTMLElement): void {
+    const card = button.closest('.item-grid-card');
+    if (!(card instanceof HTMLElement)) {
+      return;
+    }
+
+    const isExpanded = card.classList.toggle('menu-open');
+    button.setAttribute('aria-expanded', String(isExpanded));
   }
 
   private async handleAddItem(): Promise<void> {

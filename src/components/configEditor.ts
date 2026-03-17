@@ -18,6 +18,7 @@ class ConfigEditor extends LitElement {
   private _config?: InventoryConfig;
   private _translations: TranslationData = {};
   private readonly _defaultType = {
+    grid: 'custom:simple-inventory-card-custom-minimal-grid',
     standard: 'custom:simple-inventory-card-custom',
     minimal: 'custom:simple-inventory-card-custom-minimal',
   };
@@ -62,8 +63,7 @@ class ConfigEditor extends LitElement {
   }
 
   setConfig(config: InventoryConfig): void {
-    const type =
-      config.type || (config.minimal ? this._defaultType.minimal : this._defaultType.standard);
+    const type = config.type || this._resolveDefaultType(config);
     this._config = {
       ...config,
       type,
@@ -92,9 +92,7 @@ class ConfigEditor extends LitElement {
     const selectedSort = this._config.sort_method || DEFAULTS.SORT_METHOD;
 
     if (!this._config.entity && inventoryEntities.length > 0) {
-      const type =
-        this._config.type ||
-        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard);
+      const type = this._config.type || this._resolveDefaultType(this._config);
       this._config = { ...this._config, type, entity: inventoryEntities[0] };
       this.dispatchEvent(
         new CustomEvent('config-changed', {
@@ -152,9 +150,7 @@ class ConfigEditor extends LitElement {
       ...this._config,
       entity: value,
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type:
-        this._config.type ||
-        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
+      type: this._config.type || this._resolveDefaultType(this._config),
     };
 
     this._config = config;
@@ -223,9 +219,7 @@ class ConfigEditor extends LitElement {
       ...this._config,
       ...(hasActionValues ? { item_click_action: nextAction } : {}),
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type:
-        this._config.type ||
-        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
+      type: this._config.type || this._resolveDefaultType(this._config),
     };
 
     this._config = config;
@@ -257,9 +251,7 @@ class ConfigEditor extends LitElement {
       ...this._config,
       ...(parsed ? { item_click_action: parsed } : {}),
       sort_method: this._config.sort_method || DEFAULTS.SORT_METHOD,
-      type:
-        this._config.type ||
-        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
+      type: this._config.type || this._resolveDefaultType(this._config),
     };
 
     if (!parsed && this._config.item_click_action) {
@@ -330,9 +322,7 @@ class ConfigEditor extends LitElement {
     const config: InventoryConfig = {
       ...this._config,
       sort_method: value || DEFAULTS.SORT_METHOD,
-      type:
-        this._config.type ||
-        (this._config.minimal ? this._defaultType.minimal : this._defaultType.standard),
+      type: this._config.type || this._resolveDefaultType(this._config),
     };
 
     this._config = config;
@@ -408,6 +398,16 @@ class ConfigEditor extends LitElement {
         ),
       },
     ];
+  }
+
+  private _resolveDefaultType(config: InventoryConfig): string {
+    if (config.grid) {
+      return this._defaultType.grid;
+    }
+    if (config.minimal) {
+      return this._defaultType.minimal;
+    }
+    return this._defaultType.standard;
   }
 
   private _stringifyJson(value?: Record<string, any>): string {

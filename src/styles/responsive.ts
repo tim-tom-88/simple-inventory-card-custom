@@ -2,6 +2,10 @@ import { CSSResult, css } from 'lit-element';
 
 export const responsiveStyles: CSSResult = css`
   @media (max-width: 768px) {
+    .item-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .controls-row {
       flex-direction: column;
       align-items: stretch;
@@ -30,6 +34,12 @@ export const responsiveStyles: CSSResult = css`
 
     .modal-buttons button {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .item-grid {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 

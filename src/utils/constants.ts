@@ -96,6 +96,7 @@ export const ACTIONS = {
   ITEM_CLICK: 'item_click',
   OPEN_EDIT_MODAL: 'open_edit',
   REMOVE: 'remove',
+  TOGGLE_ITEM_MENU: 'toggle_item_menu',
 };
 
 export const EVENT_TYPES = {

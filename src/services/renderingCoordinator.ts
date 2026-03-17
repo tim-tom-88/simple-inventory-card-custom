@@ -58,6 +58,7 @@ export class RenderingCoordinator {
 
       const currentFilters = filters.getCurrentFilters(entityId);
       const sortMethod = config.sort_method || currentFilters.sortMethod || DEFAULTS.SORT_METHOD;
+      const grid = !!config.grid;
       const minimal = !!config.minimal;
       const allItems = validateItemsCallback(state.attributes?.items || []);
       const filteredItems = filters.filterItems(allItems, currentFilters);
@@ -72,6 +73,7 @@ export class RenderingCoordinator {
         todoLists,
         translations,
         minimal,
+        grid,
       );
 
       eventHandler.setupEventListeners();
@@ -96,6 +98,7 @@ export class RenderingCoordinator {
     todoLists: Array<{ id: string; name: string }>,
     translations: TranslationData,
     minimal = false,
+    grid = false,
   ): void {
     if (!this.renderRoot) {
       return;
@@ -114,6 +117,7 @@ export class RenderingCoordinator {
           todoLists,
           translations || {},
           minimal,
+          grid,
         );
       })
       .catch((error) => {

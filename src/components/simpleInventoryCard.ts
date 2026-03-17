@@ -155,6 +155,7 @@ class SimpleInventoryCard extends LitElement {
       this._todoLists,
       this._translations,
       !!this._config?.minimal,
+      !!this._config?.grid,
     );
   }
 
