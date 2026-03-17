@@ -195,9 +195,6 @@ export function createGridItemRowTemplate(
           </div>
           <div class="item-grid-actions">
             <div class="item-grid-menu">
-              <button class="grid-menu-btn grid-action-btn" data-action="toggle_item_menu" data-name="${item.name}" aria-label="Toggle item actions" aria-expanded="false">
-                <ha-icon icon="mdi:chevron-double-right"></ha-icon>
-              </button>
               <div class="item-grid-menu-panel">
                 <button class="grid-action-btn" data-action="open_edit" data-name="${item.name}" aria-label="Edit item">
                   <ha-icon icon="mdi:pencil"></ha-icon>
@@ -206,6 +203,9 @@ export function createGridItemRowTemplate(
                   <ha-icon icon="mdi:trash-can-outline"></ha-icon>
                 </button>
               </div>
+              <button class="grid-menu-btn grid-action-btn" data-action="toggle_item_menu" data-name="${item.name}" aria-label="Toggle item actions" aria-expanded="false">
+                <ha-icon icon="mdi:chevron-double-right"></ha-icon>
+              </button>
             </div>
           </div>
         </div>
