@@ -3994,7 +3994,11 @@ function ai(t, e, i, o, n = !1, r = !1) {
   if (0 === t.length) {
     return `<div class="no-items">${Fe.localize(o, 'items.no_items', void 0, 'No items in inventory')}</div>`;
   }
-  return 'category' === e ? si(t, i, o, n) : 'location' === e ? li(t, i, o, n) : di(t, i, o, n, r);
+  return 'category' === e
+    ? si(t, i, o, n, r)
+    : 'location' === e
+      ? li(t, i, o, n, r)
+      : di(t, i, o, n, r);
 }
 function si(t, e, i, o = !1, n = !1) {
   const r = Ue.groupItemsByCategory(t),

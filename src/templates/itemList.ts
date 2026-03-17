@@ -29,11 +29,11 @@ export function createItemsList(
   }
 
   if (sortMethod === 'category') {
-    return createItemsByCategory(items, todoLists, translations, minimal);
+    return createItemsByCategory(items, todoLists, translations, minimal, grid);
   }
 
   if (sortMethod === 'location') {
-    return createItemsByLocation(items, todoLists, translations, minimal);
+    return createItemsByLocation(items, todoLists, translations, minimal, grid);
   }
 
   return renderItemsCollection(items, todoLists, translations, minimal, grid);
