@@ -14,6 +14,16 @@ interface ValidationResult {
 }
 
 export const Utilities = {
+  compareNaturalText(a: string | undefined, b: string | undefined): number {
+    const valueA = (a ?? '').trim();
+    const valueB = (b ?? '').trim();
+
+    return valueA.localeCompare(valueB, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+  },
+
   /**
    * Gets a user-friendly inventory name from entity state
    * @param state - The entity state
@@ -437,20 +447,14 @@ export const Utilities = {
       barcode: this.sanitizeString(itemData.barcode, 100),
       category: this.sanitizeString(itemData.category, 50),
       description: this.sanitizeString(itemData.description, 500),
-      desiredQuantity: Math.max(
-        0,
-        Utilities.parseNumber(itemData.desiredQuantity, 0),
-      ),
+      desiredQuantity: Math.max(0, Utilities.parseNumber(itemData.desiredQuantity, 0)),
       expiryAlertDays: Math.max(
         0,
         Utilities.parseNumber(itemData.expiryAlertDays, DEFAULTS.EXPIRY_ALERT_DAYS),
       ),
       expiryDate: itemData.expiryDate || DEFAULTS.EXPIRY_DATE,
       name: this.sanitizeString(itemData.name, 100),
-      price: Math.max(
-        0,
-        Utilities.parseNumber(itemData.price, 0),
-      ),
+      price: Math.max(0, Utilities.parseNumber(itemData.price, 0)),
       quantity: Math.max(
         0,
         Math.min(999_999, Utilities.parseNumber(itemData.quantity, DEFAULTS.QUANTITY)),
@@ -562,7 +566,7 @@ export const Utilities = {
 
         return hasInventoryInName && hasItemsAttribute;
       })
-      .sort();
+      .sort((a, b) => this.compareNaturalText(a, b));
   },
 
   /**

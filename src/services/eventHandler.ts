@@ -389,9 +389,7 @@ export class EventHandler {
         locations.add(item.location.trim());
       }
     });
-    return Array.from(locations).sort((a, b) =>
-      a.localeCompare(b, undefined, { sensitivity: 'base' }),
-    );
+    return Array.from(locations).sort((a, b) => Utilities.compareNaturalText(a, b));
   }
 
   private getUniqueCategories(): string[] {
@@ -404,9 +402,7 @@ export class EventHandler {
         categories.add(item.category.trim());
       }
     });
-    return Array.from(categories).sort((a, b) =>
-      a.localeCompare(b, undefined, { sensitivity: 'base' }),
-    );
+    return Array.from(categories).sort((a, b) => Utilities.compareNaturalText(a, b));
   }
 
   private initializeMultiSelects(): void {

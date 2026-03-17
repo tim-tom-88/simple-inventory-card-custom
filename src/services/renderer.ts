@@ -28,12 +28,12 @@ export class Renderer {
       ...new Set(
         allItems.map((item) => item.category).filter((category): category is string => !!category),
       ),
-    ].sort();
+    ].sort((a, b) => Utilities.compareNaturalText(a, b));
     const locations = [
       ...new Set(
         allItems.map((item) => item.location).filter((location): location is string => !!location),
       ),
-    ].sort();
+    ].sort((a, b) => Utilities.compareNaturalText(a, b));
 
     this.shadowRoot.innerHTML = generateCardHTML(
       inventoryName,

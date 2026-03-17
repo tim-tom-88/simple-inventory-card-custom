@@ -64,8 +64,8 @@ const a = (t, ...e) => {
     defineProperty: d,
     getOwnPropertyDescriptor: c,
     getOwnPropertyNames: p,
-    getOwnPropertySymbols: h,
-    getPrototypeOf: u,
+    getOwnPropertySymbols: u,
+    getPrototypeOf: h,
   } = Object,
   m = globalThis,
   g = m.trustedTypes,
@@ -152,7 +152,7 @@ let $ = class extends HTMLElement {
   }
   static _$Ei() {
     if (this.hasOwnProperty(v('elementProperties'))) return;
-    const t = u(this);
+    const t = h(this);
     (t.finalize(),
       void 0 !== t.l && (this.l = [...t.l]),
       (this.elementProperties = new Map(t.elementProperties)));
@@ -161,7 +161,7 @@ let $ = class extends HTMLElement {
     if (this.hasOwnProperty(v('finalized'))) return;
     if (((this.finalized = !0), this._$Ei(), this.hasOwnProperty(v('properties')))) {
       const t = this.properties,
-        e = [...p(t), ...h(t)];
+        e = [...p(t), ...u(t)];
       for (const i of e) this.createProperty(i, t[i]);
     }
     const t = this[Symbol.metadata];
@@ -786,8 +786,8 @@ const lt = at.litElementPolyfillSupport;
 const dt = 'simple_inventory',
   ct = 'add_item',
   pt = 'decrement_item',
-  ht = 'increment_item',
-  ut = 'remove_item',
+  ut = 'increment_item',
+  ht = 'remove_item',
   mt = 'update_item',
   gt = 'amount',
   yt = 'auto_add_enabled',
@@ -840,8 +840,8 @@ const dt = 'simple_inventory',
   de = 'cancel-btn',
   ce = 'category-group',
   pe = 'category-header',
-  he = 'close-btn',
-  ue = 'location-group',
+  ue = 'close-btn',
+  he = 'location-group',
   me = 'location-header',
   ge = 'modal-content',
   ye = 'save-btn',
@@ -882,6 +882,11 @@ const dt = 'simple_inventory',
   qe = 100,
   Pe = 'Inventory',
   Ue = {
+    compareNaturalText(t, e) {
+      const i = (t ?? '').trim(),
+        o = (e ?? '').trim();
+      return i.localeCompare(o, void 0, { numeric: !0, sensitivity: 'base' });
+    },
     getInventoryName(t, e) {
       if (t?.attributes?.friendly_name?.trim()) return t.attributes.friendly_name;
       const i = e.split('.');
@@ -1154,15 +1159,16 @@ const dt = 'simple_inventory',
       Object.keys(t.states)
         .filter((t) => t.startsWith('todo.'))
         .map((e) => ({ id: e, name: t.states[e].attributes?.friendly_name || e.split('.')[1] })),
-    findInventoryEntities: (t) =>
-      Object.keys(t?.states || {})
+    findInventoryEntities(t) {
+      return Object.keys(t?.states || {})
         .filter((e) => {
           if (!e.startsWith('sensor.')) return !1;
           const i = e.includes('inventory'),
             o = void 0 !== t?.states[e]?.attributes?.items;
           return i && o;
         })
-        .sort(),
+        .sort((t, e) => this.compareNaturalText(t, e));
+    },
     createEntityOptions: (t, e) =>
       e.map((e) => ({ value: e, label: t.states[e]?.attributes?.friendly_name || e })),
   };
@@ -1679,7 +1685,7 @@ class je {
   }
   async removeItem(t, e) {
     try {
-      return (await this.hass.callService(dt, ut, { [At]: t, [It]: e }), { success: !0 });
+      return (await this.hass.callService(dt, ht, { [At]: t, [It]: e }), { success: !0 });
     } catch (i) {
       return (
         console.error('Error removing item:', i),
@@ -1689,7 +1695,7 @@ class je {
   }
   async incrementItem(t, e, i = 1) {
     try {
-      return (await this.hass.callService(dt, ht, { [At]: t, [It]: e, [gt]: i }), { success: !0 });
+      return (await this.hass.callService(dt, ut, { [At]: t, [It]: e, [gt]: i }), { success: !0 });
     } catch (o) {
       return (
         console.error('Error incrementing item:', o),
@@ -1960,9 +1966,9 @@ class Qe {
         t.stopPropagation(),
         e.id === Mt ? this.closeAddModal() : this.closeEditModal(),
         !0)
-      : e.dataset.action === ve || (e.classList.contains(he) && e.closest(`#${Mt}`))
+      : e.dataset.action === ve || (e.classList.contains(ue) && e.closest(`#${Mt}`))
         ? (t.preventDefault(), t.stopPropagation(), this.closeAddModal(), !0)
-        : e.classList.contains(he) && e.closest(`#${Rt}`)
+        : e.classList.contains(ue) && e.closest(`#${Rt}`)
           ? (t.preventDefault(), t.stopPropagation(), this.closeEditModal(), !0)
           : (e.closest(`.${ge}`), !1);
   }
@@ -2462,7 +2468,7 @@ class Ze {
       const o = Fe.localize(e, 'common.no_location', void 0, 'No Location'),
         n = (t.location ?? o).toLowerCase().trim(),
         r = (i.location ?? o).toLowerCase().trim(),
-        a = n.localeCompare(r);
+        a = Ue.compareNaturalText(n, r);
       return 0 !== a ? a : this.compareNames(t.name, i.name);
     });
   }
@@ -2471,7 +2477,7 @@ class Ze {
       const o = Fe.localize(e, 'common.uncategorized', void 0, 'Uncategorized'),
         n = (t.category ?? o).toLowerCase().trim(),
         r = (i.category ?? o).toLowerCase().trim(),
-        a = n.localeCompare(r);
+        a = Ue.compareNaturalText(n, r);
       return 0 !== a ? a : this.compareNames(t.name, i.name);
     });
   }
@@ -2499,7 +2505,7 @@ class Ze {
   compareNames(t, e) {
     const i = (t ?? '').toLowerCase().trim(),
       o = (e ?? '').toLowerCase().trim();
-    return i.localeCompare(o, void 0, { numeric: !0, sensitivity: 'base' });
+    return Ue.compareNaturalText(i, o);
   }
   setupSearchInput(t, e) {
     const i = this.shadowRoot.getElementById(le);
@@ -3914,7 +3920,7 @@ function ii(t, e, i, o = [], n = []) {
   return `\n    <div id="${e.id}" class="modal">\n      <div class="modal-content">\n\n        ${(function (
     t,
   ) {
-    return `\n    <div class="modal-header">\n      <h3>${t.title}</h3>\n      <button class="${he}" ${t.closeAction ? `data-action="${t.closeAction}"` : ''}>\n        ×\n      </button>\n    </div>\n  `;
+    return `\n    <div class="modal-header">\n      <h3>${t.title}</h3>\n      <button class="${ue}" ${t.closeAction ? `data-action="${t.closeAction}"` : ''}>\n        ×\n      </button>\n    </div>\n  `;
   })(
     e,
   )}\n\n        <div class="modal-body">\n          <div id="${r}-validation-message" class="validation-message">\n            <span class="validation-text"></span>\n          </div>\n\n          ${(function (
@@ -4017,7 +4023,7 @@ function ai(t, e, i, o, n = !1, r = !1) {
 }
 function si(t, e, i, o = !1, n = !1) {
   const r = Ue.groupItemsByCategory(t),
-    a = Object.keys(r).sort();
+    a = Object.keys(r).sort((t, e) => Ue.compareNaturalText(t, e));
   if (n) {
     return di(
       a.flatMap((t) => r[t]),
@@ -4036,7 +4042,7 @@ function si(t, e, i, o = !1, n = !1) {
 }
 function li(t, e, i, o = !1, n = !1) {
   const r = Ue.groupItemsByLocation(t),
-    a = Object.keys(r).sort();
+    a = Object.keys(r).sort((t, e) => Ue.compareNaturalText(t, e));
   if (n) {
     return di(
       a.flatMap((t) => r[t]),
@@ -4049,7 +4055,7 @@ function li(t, e, i, o = !1, n = !1) {
   return a
     .map(
       (t) =>
-        `\n        <div class="${ue}">\n          <div class="${me}">${t}</div>\n          ${di(r[t], e, i, o, n)}\n        </div>\n`,
+        `\n        <div class="${he}">\n          <div class="${me}">${t}</div>\n          ${di(r[t], e, i, o, n)}\n        </div>\n`,
     )
     .join('');
 }
@@ -4125,7 +4131,7 @@ function pi(t, e, i, o, n, r, a, s, l, d, c = !1, p = !1) {
     );
   })(a, d, n, r)}\n    </ha-card>\n  `;
 }
-class hi {
+class ui {
   constructor(t) {
     this.shadowRoot = t;
   }
@@ -4133,9 +4139,13 @@ class hi {
     const d = Ue.getInventoryName(t, e),
       c = Ue.getInventoryDescription(t),
       p = t?.attributes?.items || [],
-      h = [...new Set(p.map((t) => t.category).filter((t) => !!t))].sort(),
-      u = [...new Set(p.map((t) => t.location).filter((t) => !!t))].sort();
-    this.shadowRoot.innerHTML = pi(d, i, o, n, h, u, r, p, c, a, s, l);
+      u = [...new Set(p.map((t) => t.category).filter((t) => !!t))].sort((t, e) =>
+        Ue.compareNaturalText(t, e),
+      ),
+      h = [...new Set(p.map((t) => t.location).filter((t) => !!t))].sort((t, e) =>
+        Ue.compareNaturalText(t, e),
+      );
+    this.shadowRoot.innerHTML = pi(d, i, o, n, u, h, r, p, c, a, s, l);
   }
   renderError(t, e) {
     const i = e ? Fe.localize(e, 'common.error', void 0, 'Error') : 'Error';
@@ -4146,7 +4156,7 @@ class hi {
     this.shadowRoot.innerHTML = `\n      <style>${Ge}</style>\n      <ha-card>\n        <div class="card-content">\n          <div class="loading-container" style="padding: 16px; text-align: center;">\n            <p>${e}</p>\n          </div>\n        </div>\n      </ha-card>\n    `;
   }
 }
-class ui {
+class hi {
   userInteracting = !1;
   renderTimeout = void 0;
   _lastEntityState = void 0;
@@ -4488,7 +4498,7 @@ class gi {
       Object.values(t.attributes.items).forEach((t) => {
         t.location?.trim() && e.add(t.location.trim());
       }),
-      Array.from(e).sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' }))
+      Array.from(e).sort((t, e) => Ue.compareNaturalText(t, e))
     );
   }
   getUniqueCategories() {
@@ -4499,7 +4509,7 @@ class gi {
       Object.values(t.attributes.items).forEach((t) => {
         t.category?.trim() && e.add(t.category.trim());
       }),
-      Array.from(e).sort((t, e) => t.localeCompare(e, void 0, { sensitivity: 'base' }))
+      Array.from(e).sort((t, e) => Ue.compareNaturalText(t, e))
     );
   }
   initializeMultiSelects() {
@@ -4614,20 +4624,20 @@ class yi {
       try {
         const s = new je(t),
           l = new Ze(this.renderRoot),
-          d = new hi(this.renderRoot),
-          c = new ui();
+          d = new ui(this.renderRoot),
+          c = new hi();
         c.setRenderCallback(i);
         const p = (e) => Ue.getInventoryId(t, e),
-          h = new We(this.renderRoot, s, p, o),
-          u = new gi(this.renderRoot, s, h, l, e, t, i, n, r, a);
+          u = new We(this.renderRoot, s, p, o),
+          h = new gi(this.renderRoot, s, u, l, e, t, i, n, r, a);
         return (
           (this.services = {
             services: s,
-            modals: h,
+            modals: u,
             filters: l,
             renderer: d,
             state: c,
-            eventHandler: u,
+            eventHandler: h,
           }),
           (this.isInitialized = !0),
           this.services
@@ -4686,16 +4696,16 @@ class fi {
           return void this.renderError(t);
         }
         const { filters: l, renderer: d, eventHandler: c, state: p } = s,
-          h = l.getCurrentFilters(r),
-          u = t.sort_method || h.sortMethod || Te.SORT_METHOD,
+          u = l.getCurrentFilters(r),
+          h = t.sort_method || u.sortMethod || Te.SORT_METHOD,
           m = !!t.grid,
           g = !!t.minimal,
           y = n(a.attributes?.items || []),
-          f = l.filterItems(y, h),
-          v = l.sortItems(f, u, o);
-        (d.renderCard(a, r, v, h, u, i, o, g, m),
+          f = l.filterItems(y, u),
+          v = l.sortItems(f, h, o);
+        (d.renderCard(a, r, v, u, h, i, o, g, m),
           c.setupEventListeners(),
-          l.updateFilterIndicators(h, o),
+          l.updateFilterIndicators(u, o),
           p.trackUserInteraction(this.renderRoot));
       } catch (r) {
         console.error('Error rendering card:', r);

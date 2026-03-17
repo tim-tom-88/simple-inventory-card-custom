@@ -16,3 +16,41 @@ You can set an expiration date for an item, how far ahead you want to be warned,
 
 (the description will not sync with the built-in Home Assistant `todo.shopping_list`, but any other list you create will work)
 
+## Card Types
+
+This repository currently exposes three Lovelace card types:
+
+- `custom:simple-inventory-card-custom`
+  The standard card with full item controls.
+- `custom:simple-inventory-card-custom-minimal`
+  A reduced version of the card with the minimal search/add experience.
+- `custom:simple-inventory-card-custom-minimal-grid`
+  A minimal grid layout that keeps the compact search bar and renders items as tiles.
+![alt text](image.png)
+## Minimal Grid Card
+
+The minimal grid card is intended for dense browsing on mobile and tablet layouts.
+
+Behavior:
+
+- Uses the same minimal search controls as the minimal card
+- Displays items in a responsive grid
+- Keeps sort ordering, including natural location sorting such as `1-3`, `2-6`, `11-3`
+- Shows the item description under the title when present
+- Shows the item location in the bottom-left of the tile
+- Uses a chevron button to reveal edit and delete actions above it
+
+Example:
+
+```yaml
+type: custom:simple-inventory-card-custom-minimal-grid
+entity: sensor.office_parts_inventory
+sort_method: location
+```
+
+## Notes
+
+- The grid card removes the inventory title/header to maximize visible item space.
+- On standard phone portrait layouts, the grid targets two columns by default.
+- Because the built artifact in `dist/` is tracked in this repository, run `npm run build` before committing so the bundled file matches `src/`.
+

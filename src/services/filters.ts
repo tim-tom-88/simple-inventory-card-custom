@@ -253,7 +253,7 @@ export class Filters {
       const locationB = (b.location ?? noLocation).toLowerCase().trim();
 
       // First sort by location
-      const locationCompare = locationA.localeCompare(locationB);
+      const locationCompare = Utilities.compareNaturalText(locationA, locationB);
       if (locationCompare !== 0) {
         return locationCompare;
       }
@@ -274,7 +274,7 @@ export class Filters {
       const categoryB = (b.category ?? uncategorized).toLowerCase().trim();
 
       // First sort by category
-      const categoryCompare = categoryA.localeCompare(categoryB);
+      const categoryCompare = Utilities.compareNaturalText(categoryA, categoryB);
       if (categoryCompare !== 0) {
         return categoryCompare;
       }
@@ -332,10 +332,7 @@ export class Filters {
   private compareNames(nameA: string | undefined, nameB: string | undefined): number {
     const a = (nameA ?? '').toLowerCase().trim();
     const b = (nameB ?? '').toLowerCase().trim();
-    return a.localeCompare(b, undefined, {
-      numeric: true,
-      sensitivity: 'base',
-    });
+    return Utilities.compareNaturalText(a, b);
   }
 
   setupSearchInput(entityId: string, onFilterChange: () => void): void {

@@ -47,7 +47,7 @@ export function createItemsByCategory(
   grid = false,
 ): string {
   const grouped = Utilities.groupItemsByCategory(items);
-  const sortedCategories = Object.keys(grouped).sort();
+  const sortedCategories = Object.keys(grouped).sort((a, b) => Utilities.compareNaturalText(a, b));
 
   if (grid) {
     const orderedItems = sortedCategories.flatMap((category) => grouped[category]);
@@ -74,7 +74,7 @@ export function createItemsByLocation(
   grid = false,
 ): string {
   const grouped = Utilities.groupItemsByLocation(items);
-  const sortedLocations = Object.keys(grouped).sort();
+  const sortedLocations = Object.keys(grouped).sort((a, b) => Utilities.compareNaturalText(a, b));
 
   if (grid) {
     const orderedItems = sortedLocations.flatMap((location) => grouped[location]);
