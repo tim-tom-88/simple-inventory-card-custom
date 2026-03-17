@@ -184,6 +184,15 @@ export const itemRowStyles: CSSResult = css`
     min-height: 168px;
     padding: 0;
     overflow: hidden;
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      border-color 0.12s ease;
+  }
+
+  .item-grid-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.14);
   }
 
   .item-grid-content {
