@@ -4082,7 +4082,7 @@ const ci = /* @__PURE__ */ Object.freeze(
   ),
 );
 function pi(t, e, i, o, n, r, a, s, l, d, c = !1, p = !1) {
-  return `\n    <style>${Ge}</style>\n    <ha-card>\n      ${Ke(t, s, d, l)}\n\n      <div class="search-controls">\n        ${ti(i, d)}\n      </div>\n\n      ${(function (
+  return `\n    <style>${Ge}</style>\n    <ha-card>\n      ${p ? '' : Ke(t, s, d, l)}\n\n      <div class="search-controls">\n        ${ti(i, d)}\n      </div>\n\n      ${(function (
     t,
     e,
   ) {

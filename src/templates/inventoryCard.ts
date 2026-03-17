@@ -27,7 +27,7 @@ export function generateCardHTML(
   return `
     <style>${styles}</style>
     <ha-card>
-      ${createInventoryHeader(inventoryName, allItems as InventoryItem[], translations, description)}
+      ${grid ? '' : createInventoryHeader(inventoryName, allItems as InventoryItem[], translations, description)}
 
       <div class="search-controls">
         ${createSearchAndFilters(filters, translations)}
